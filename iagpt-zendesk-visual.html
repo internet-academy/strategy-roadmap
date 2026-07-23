@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IAGPT Phase 2: Zendesk BRD — Visual</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    background: #e8e8e8; color: #212121; line-height: 1.5;
+  }
+  .canvas {
+    width: 1123px; margin: 0 auto; background: #fff; padding: 20px 0;
+  }
+  .section-frame {
+    margin: 0 24px 20px; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;
+    background: #fff;
+  }
+  .section-label {
+    background: #1a237e; color: #fff; padding: 6px 20px; font-size: 13px; font-weight: 700; letter-spacing: 0.5px;
+  }
+  .section-content { padding: 20px 24px; }
+
+  /* Title */
+  .title-block { text-align: center; padding: 30px 24px 20px; }
+  .title-block h1 { font-size: 26px; font-weight: 800; color: #1a237e; margin-bottom: 6px; }
+  .title-block .subtitle { font-size: 14px; color: #616161; margin-bottom: 4px; }
+  .title-block .meta { font-size: 11px; color: #9e9e9e; }
+
+  /* Generic */
+  h2 { font-size: 18px; font-weight: 800; color: #1a237e; margin-bottom: 6px; border-bottom: 2px solid #1a237e; padding-bottom: 4px; }
+  h3 { font-size: 14px; font-weight: 700; color: #283593; margin-top: 14px; margin-bottom: 6px; }
+  p { font-size: 12px; color: #424242; margin-bottom: 10px; }
+  ul, ol { padding-left: 20px; margin-bottom: 10px; }
+  li { font-size: 12px; margin-bottom: 4px; color: #424242; }
+  strong { color: #1a237e; }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 14px; }
+  th { background: #1a237e; color: #fff; padding: 7px 8px; text-align: left; font-size: 11px; font-weight: 700; }
+  td { padding: 6px 8px; border-bottom: 1px solid #e0e0e0; font-size: 11px; vertical-align: top; }
+  tr:nth-child(even) td { background: #f9f9f9; }
+
+  /* Problem cards */
+  .problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .problem-card { border: 2px solid #c62828; border-radius: 6px; padding: 14px; background: #fff8f8; }
+  .problem-card h4 { font-size: 13px; font-weight: 700; color: #c62828; margin-bottom: 6px; }
+  .problem-card p { font-size: 11px; margin-bottom: 0; }
+
+  /* Solution cards */
+  .solution-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .solution-card { border: 2px solid #2e7d32; border-radius: 6px; padding: 14px; background: #f8fff8; }
+  .solution-card h4 { font-size: 13px; font-weight: 700; color: #2e7d32; margin-bottom: 6px; }
+  .solution-card p { font-size: 11px; margin-bottom: 0; }
+
+  /* Diagram */
+  .diagram-row { display: flex; justify-content: center; gap: 40px; margin: 16px 0; align-items: flex-start; }
+  .diagram-col { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .diagram-box { border: 2px solid; border-radius: 6px; padding: 10px 16px; text-align: center; font-size: 11px; font-weight: 700; }
+  .diagram-box.current { border-color: #c62828; background: #ffebee; color: #c62828; }
+  .diagram-box.target { border-color: #2e7d32; background: #e8f5e9; color: #2e7d32; }
+  .diagram-box.shared { border-color: #f9a825; background: #fff9c4; color: #f57f17; }
+  .diagram-box.ai { border-color: #7b1fa2; background: #f3e5f5; color: #7b1fa2; }
+  .diagram-arrow { font-size: 16px; color: #757575; }
+  .diagram-label { font-size: 10px; font-weight: 700; color: #616161; }
+
+  /* Cost-benefit boxes */
+  .spend-box { background: #ffebee; border-left: 4px solid #c62828; padding: 14px 18px; margin: 12px 0; border-radius: 6px; }
+  .save-box { background: #e8f5e9; border-left: 4px solid #2e7d32; padding: 14px 18px; margin: 12px 0; border-radius: 6px; }
+  .result-box { background: #e8eaf6; border-left: 4px solid #1a237e; padding: 14px 18px; margin: 12px 0; border-radius: 6px; }
+  .warning-box { background: #fff9c4; border-left: 4px solid #f9a825; padding: 12px 16px; margin: 12px 0; border-radius: 6px; font-size: 11px; color: #424242; }
+  .spend-box h4, .save-box h4, .result-box h4 { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+  .spend-box h4 { color: #c62828; }
+  .save-box h4 { color: #2e7d32; }
+  .result-box h4 { color: #1a237e; }
+
+  /* P&L table */
+  .pnl-table th { font-size: 10px; white-space: nowrap; }
+  .pnl-table td { font-size: 10px; text-align: right; font-weight: 600; }
+  .pnl-table td:first-child { text-align: left; font-weight: 700; color: #424242; }
+  .pnl-table tr.spend-row td { background: #ffebee; }
+  .pnl-table tr.save-row td { background: #e8f5e9; }
+  .pnl-table tr.total-row td { font-weight: 800; border-top: 2px solid #1a237e; background: #e8eaf6; }
+  .pnl-table tr.profit-row td { font-weight: 800; }
+  .pnl-table tr.cumulative-row td { font-weight: 800; background: #fff9c4; }
+  .pnl-positive { color: #2e7d32; }
+  .pnl-negative { color: #c62828; }
+
+  /* Timeline */
+  .timeline-table tr.highlight td { background: #fff9c4; font-weight: 700; }
+
+  /* Approach tracks */
+  .track-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 14px; }
+  .track-card { border: 2px solid #e0e0e0; border-radius: 6px; padding: 14px; }
+  .track-card h4 { font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+  .track-card.a { border-color: #1565c0; }
+  .track-card.a h4 { color: #1565c0; }
+  .track-card.b { border-color: #e65100; }
+  .track-card.b h4 { color: #e65100; }
+  .track-card ul { margin-bottom: 0; }
+
+  @media print { @page { size: A4 landscape; } .canvas { width: auto; background: #fff; } .section-frame { break-inside: avoid; } }
+</style>
+</head>
+<body>
+<div class="canvas">
+
+<!-- TITLE -->
+<div class="title-block">
+  <h1>IAGPT Phase 2: Zendesk Ingestion and Replacement Readiness</h1>
+  <div class="subtitle">Business Requirements Document — Visual Summary</div>
+  <div class="meta">Prepared by: Choo · July 2026 · Approvers: Aritaki-san, President Nishi</div>
+</div>
+
+<!-- ===== SECTION 1: CURRENT SITUATION ===== -->
+<div class="section-frame">
+  <div class="section-label">1 — CURRENT SITUATION: Problems with Zendesk</div>
+  <div class="section-content">
+    <h2>What's happening today</h2>
+    <p>Zendesk currently holds <strong>58 approved support knowledge articles</strong> and operational workflows. Our 3–4 support staff must search <strong>3 separate systems</strong> (Zendesk, Confluence, internal docs) to find answers — wasting an estimated <strong>2 hours per person per week</strong>.</p>
+
+    <div class="diagram-row">
+      <div class="diagram-col">
+        <div class="diagram-label">Current: 3 separate knowledge sources</div>
+        <div style="display: flex; gap: 8px;">
+          <div class="diagram-box current">Zendesk<br>(58 articles)</div>
+          <div class="diagram-box current">Confluence<br>(Phase 1)</div>
+          <div class="diagram-box current">Internal<br>docs</div>
+        </div>
+        <div class="diagram-arrow">↓ ↓ ↓</div>
+        <div class="diagram-box current" style="min-width: 200px;">Staff search 3 systems<br>~2h/week wasted per person</div>
+        <div class="diagram-arrow">↓</div>
+        <div class="diagram-box shared" style="min-width: 120px;">~¥4–4.8M/yr<br>Zendesk cost</div>
+      </div>
+    </div>
+
+    <h3>The 4 key problems</h3>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <h4>1. Vendor dependency</h4>
+        <p>IA does not control the knowledge platform. If Zendesk raises prices or changes features, we have no leverage.</p>
+      </div>
+      <div class="problem-card">
+        <h4>2. Recurring cost (~¥4–4.8M/year)</h4>
+        <p>Suite Team, 4 agents at $55/agent/month. This cost continues every year regardless of how much we actually use Zendesk.</p>
+      </div>
+      <div class="problem-card">
+        <h4>3. Knowledge fragmentation</h4>
+        <p>Support knowledge is split across 3 systems. Staff waste ~2h/week searching — that's <strong>~¥8.3M/year</strong> in lost staff time (4 staff × 2h × 52 weeks × ¥20K/h).</p>
+      </div>
+      <div class="problem-card">
+        <h4>4. No AI integration path</h4>
+        <p>Zendesk knowledge can't be used in IAGPT AI workflows. Staff can't get AI-assisted answers grounded in support knowledge.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 2: IDEAL SITUATION ===== -->
+<div class="section-frame">
+  <div class="section-label">2 — THE IDEAL SITUATION: How Phase 2 Solves These Problems</div>
+  <div class="section-content">
+    <h2>Target: one unified knowledge base, AI-powered, IA-controlled</h2>
+    <p>Bring approved Zendesk knowledge into IAGPT. Staff search <strong>one system</strong> instead of three. Eventually replace Zendesk entirely when we're ready.</p>
+
+    <div class="diagram-row">
+      <div class="diagram-col">
+        <div class="diagram-label">Target: one unified IAGPT knowledge base</div>
+        <div class="diagram-box target" style="min-width: 280px;">IAGPT Knowledge Base<br>(58 Zendesk articles + Confluence + digital text)</div>
+        <div class="diagram-arrow">↓</div>
+        <div class="diagram-box ai" style="min-width: 200px;">AI-assisted answers<br>(staff-only, human-reviewed)</div>
+        <div class="diagram-arrow">↓</div>
+        <div class="diagram-box target" style="min-width: 160px;">Staff save ~2h/week<br>~¥8.3M/year reclaimed</div>
+        <div class="diagram-arrow">↓ (after Phase 4 + Feb 2027 decision)</div>
+        <div class="diagram-box target" style="min-width: 160px;">Zendesk cancelled<br>~¥4–4.8M/year saved</div>
+      </div>
+    </div>
+
+    <h3>How each problem gets solved</h3>
+    <div class="solution-grid">
+      <div class="solution-card">
+        <h4>Vendor dependency → IA-controlled</h4>
+        <p>Knowledge moves into IAGPT, which IA owns and controls. No more vendor lock-in.</p>
+      </div>
+      <div class="solution-card">
+        <h4>Recurring cost → Eliminated (after Phase 4)</h4>
+        <p>Once Zendesk is cancelled (target: Feb 2027), ~¥4–4.8M/year stops flowing out. Phase 2 builds the foundation for this decision.</p>
+      </div>
+      <div class="solution-card">
+        <h4>Fragmentation → One unified search</h4>
+        <p>Staff search IAGPT only — Zendesk + Confluence knowledge in one place. ~2h/week per person reclaimed immediately (from July 2026).</p>
+      </div>
+      <div class="solution-card">
+        <h4>No AI path → AI-assisted answers</h4>
+        <p>IAGPT provides AI-assisted answers grounded in support knowledge. Staff get better answers faster, with human review for quality.</p>
+      </div>
+    </div>
+
+    <h3>Phase 2 approach: two tracks</h3>
+    <div class="track-grid">
+      <div class="track-card a">
+        <h4>Phase 2A — Knowledge Ingestion</h4>
+        <ul>
+          <li>58 approved Zendesk articles imported into staff-only IAGPT</li>
+          <li>Support / School Desk reviews each article for accuracy</li>
+          <li>Staff search and use IAGPT for support answers</li>
+          <li>Estimated effort: ~87h (review + ingest + test)</li>
+        </ul>
+      </div>
+      <div class="track-card b">
+        <h4>Phase 2B — Replacement Readiness</h4>
+        <ul>
+          <li>Identify chat, ticketing, escalation, reporting workflows</li>
+          <li>Categorize each: "replace with IAGPT" or "retain in Zendesk"</li>
+          <li>Gap analysis — what must be built before cancellation</li>
+          <li>No replacement work in Phase 2 — only inventory and planning</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Timeline</h3>
+    <table class="timeline-table">
+      <tr><th style="width:15%">Period</th><th>Milestone</th><th>Decision gate</th></tr>
+      <tr><td>Jun 2026</td><td>Phase 2 BRD + TS creation</td><td>Approve scope for ingestion and readiness work</td></tr>
+      <tr><td>Jul 2026</td><td>Phase 2 live release</td><td>Staff begin using IAGPT → time savings start</td></tr>
+      <tr><td>Sep 2026</td><td>Phase 3 BRD (digital text)</td><td>Depends on Phase 2 knowledge approach</td></tr>
+      <tr><td>Nov 2026</td><td>Phase 4 BRD (customer AI)</td><td>Define customer-facing scope and controls</td></tr>
+      <tr><td>Jan 2027</td><td>Phase 4 user testing</td><td>Validate quality, controls, and workflow</td></tr>
+      <tr class="highlight"><td><strong>Feb 2027</strong></td><td><strong>Phase 4 live release</strong></td><td><strong>Target Zendesk replacement/cancellation readiness decision</strong></td></tr>
+    </table>
+
+    <div class="warning-box">
+      <strong>Important boundaries:</strong> Phase 2 is staff-only (no customer-facing AI). No immediate Zendesk cancellation — that's a separate decision in Feb 2027 after Phase 4 is live and quality gates pass.
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 3: COST-BENEFIT / P&L ===== -->
+<div class="section-frame">
+  <div class="section-label">3 — COST-BENEFIT: Investment, Savings, and Break-even</div>
+  <div class="section-content">
+    <h2>Financial summary</h2>
+    <p>The Phase 2 investment pays for itself in approximately <strong>2 months</strong> of staff time savings alone — even before Zendesk is cancelled.</p>
+
+    <div class="spend-box">
+      <h4>🔴 What we spend (one-time)</h4>
+      <table style="margin-bottom: 0;">
+        <tr><th style="width:35%">Cost</th><th style="width:15%">Amount</th><th>What it covers</th></tr>
+        <tr><td>Ingestion effort (dev time)</td><td><strong>~¥1.74M</strong></td><td>87 hours × ¥20,000/h — reviewing, approving, ingesting, and testing 58 Zendesk articles into IAGPT</td></tr>
+        <tr style="font-weight: 800; background: #ffcdd2;"><td>Total one-time cost</td><td>~¥1.74M</td><td>No new infrastructure — uses existing IAGPT and AI hardware</td></tr>
+      </table>
+    </div>
+
+    <div class="save-box">
+      <h4>🟢 What we save every year (recurring)</h4>
+      <table style="margin-bottom: 0;">
+        <tr><th style="width:35%">Saving</th><th style="width:15%">Amount/year</th><th>How it works</th></tr>
+        <tr><td>Staff time saved</td><td><strong>~¥8.3M</strong></td><td>4 support staff × 2h/week × 52 weeks × ¥20,000/h — one IAGPT search instead of 3 systems</td></tr>
+        <tr><td>Zendesk subscription (if cancelled)</td><td><strong>~¥4–4.8M</strong></td><td>Suite Team, 4 agents at $55/agent/month. Cancelled after Phase 4 + Feb 2027 decision</td></tr>
+        <tr style="font-weight: 800; background: #c8e6c9;"><td>Total recurring savings</td><td>~¥12.3–13.1M/year</td><td>Every year, for as long as IAGPT replaces Zendesk</td></tr>
+      </table>
+    </div>
+
+    <div class="result-box">
+      <h4>🔵 Net result</h4>
+      <table style="margin-bottom: 0;">
+        <tr><th style="width:35%">Summary</th><th style="width:15%">Amount</th><th>What it means</th></tr>
+        <tr><td>One-time investment</td><td><strong>~¥1.74M</strong></td><td>We spend this once to ingest Zendesk knowledge into IAGPT</td></tr>
+        <tr><td>Annual savings</td><td><strong>~¥12.3–13.1M/year</strong></td><td>We save this every year from staff time + Zendesk cancellation</td></tr>
+        <tr style="font-weight: 800; background: #c8e6c9;"><td>Payback period</td><td><strong>~2 months</strong></td><td>The ¥1.74M investment is recovered in ~2 months of staff time savings alone</td></tr>
+      </table>
+    </div>
+
+    <h3>P&L simulation: when does break-even happen?</h3>
+    <p>Staff time savings start <strong>immediately</strong> (July 2026, when Phase 2 goes live). Zendesk savings start after the <strong>February 2027</strong> readiness decision. Here's the year-by-year projection:</p>
+
+    <table class="pnl-table">
+      <tr>
+        <th style="width:22%">Summary</th>
+        <th>Jul–Dec 2026</th>
+        <th>Jan–Jun 2027</th>
+        <th>Jul–Dec 2027</th>
+        <th>Jan–Jun 2028</th>
+        <th>Jul–Dec 2028</th>
+        <th>Jan–Jun 2029</th>
+      </tr>
+      <tr class="spend-row">
+        <td>One-time cost (ingestion)</td>
+        <td class="pnl-negative">-¥1.74M</td>
+        <td>¥0</td>
+        <td>¥0</td>
+        <td>¥0</td>
+        <td>¥0</td>
+        <td>¥0</td>
+      </tr>
+      <tr class="save-row">
+        <td>Staff time savings</td>
+        <td class="pnl-positive">+¥4.15M</td>
+        <td class="pnl-positive">+¥4.15M</td>
+        <td class="pnl-positive">+¥4.15M</td>
+        <td class="pnl-positive">+¥4.15M</td>
+        <td class="pnl-positive">+¥4.15M</td>
+        <td class="pnl-positive">+¥4.15M</td>
+      </tr>
+      <tr class="save-row">
+        <td>Zendesk savings (after Feb 2027)</td>
+        <td>¥0</td>
+        <td>¥0</td>
+        <td class="pnl-positive">+¥2.0–2.4M</td>
+        <td class="pnl-positive">+¥2.0–2.4M</td>
+        <td class="pnl-positive">+¥2.0–2.4M</td>
+        <td class="pnl-positive">+¥2.0–2.4M</td>
+      </tr>
+      <tr class="profit-row">
+        <td>Half-year profit/(loss)</td>
+        <td class="pnl-positive">+¥2.41M</td>
+        <td class="pnl-positive">+¥4.15M</td>
+        <td class="pnl-positive">+¥6.15–6.55M</td>
+        <td class="pnl-positive">+¥6.15–6.55M</td>
+        <td class="pnl-positive">+¥6.15–6.55M</td>
+        <td class="pnl-positive">+¥6.15–6.55M</td>
+      </tr>
+      <tr class="cumulative-row">
+        <td>Cumulative</td>
+        <td class="pnl-positive">+¥2.41M</td>
+        <td class="pnl-positive">+¥6.56M</td>
+        <td class="pnl-positive">+¥12.71–13.11M</td>
+        <td class="pnl-positive">+¥18.86–19.66M</td>
+        <td class="pnl-positive">+¥25.01–26.21M</td>
+        <td class="pnl-positive">+¥31.16–32.76M</td>
+      </tr>
+    </table>
+
+    <div class="result-box" style="margin-top: 12px;">
+      <p style="margin-bottom: 4px;"><strong>📈 Break-even: within the first 6 months.</strong></p>
+      <p style="margin-bottom: 0; font-size: 11px;">
+        The ¥1.74M investment is recovered by ~September 2026 (2 months after July 2026 live release) from staff time savings alone. From that point forward, every yen saved is pure recurring benefit. Zendesk cancellation savings (~¥4–4.8M/year) add to this starting from the Feb 2027 decision.
+      </p>
+    </div>
+
+    <div class="warning-box">
+      <strong>Timing notes:</strong><br>
+      • Staff time savings (~¥8.3M/year) start July 2026 when Phase 2 goes live — staff begin using IAGPT instead of searching 3 systems.<br>
+      • Zendesk subscription savings (~¥4–4.8M/year) only start after Phase 4 is live and the February 2027 readiness decision passes.<br>
+      • Zendesk cost estimate (~¥4–4.8M/year) is based on Suite Team pricing ($55/agent/month, 4 agents, ¥150/USD). Actual contract amount needs confirmation with procurement.
+    </div>
+
+    <h3>Approval requested</h3>
+    <table>
+      <tr><th style="width:30%">Item</th><th>Decision</th></tr>
+      <tr><td><strong>Phase 2 approval</strong></td><td>Approve Phase 2A ingestion + Phase 2B replacement readiness work</td></tr>
+      <tr><td><strong>Investment</strong></td><td>~¥1.74M one-time (87h dev time). No new infrastructure.</td></tr>
+      <tr><td><strong>Expected return</strong></td><td>~¥8.3M/year staff savings (from Jul 2026) + ~¥4–4.8M/year Zendesk savings (from Feb 2027)</td></tr>
+      <tr><td><strong>Payback</strong></td><td>~2 months</td></tr>
+      <tr><td><strong>Boundary</strong></td><td>No immediate Zendesk cancellation. No customer-facing AI in Phase 2.</td></tr>
+    </table>
+  </div>
+</div>
+
+</div><!-- /canvas -->
+</body>
+</html>
