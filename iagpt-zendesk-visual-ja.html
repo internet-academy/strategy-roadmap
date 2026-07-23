@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IAGPTフェーズ2: Zendesk取り込み・置き換え準備 — ビジュアルサマリー</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    background: #e8e8e8; color: #212121; line-height: 1.5;
+  }
+  .canvas {
+    width: 1123px; margin: 0 auto; background: #fff; padding: 20px 0;
+  }
+  .section-frame {
+    margin: 0 24px 20px; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;
+    background: #fff;
+  }
+  .section-label {
+    background: #1a237e; color: #fff; padding: 6px 20px; font-size: 13px; font-weight: 700; letter-spacing: 0.5px;
+  }
+  .section-content { padding: 20px 24px; }
+
+  /* Title */
+  .title-block { text-align: center; padding: 30px 24px 20px; }
+  .title-block h1 { font-size: 26px; font-weight: 800; color: #1a237e; margin-bottom: 6px; }
+  .title-block .subtitle { font-size: 14px; color: #616161; margin-bottom: 4px; }
+  .title-block .meta { font-size: 11px; color: #9e9e9e; }
+
+  /* Generic */
+  h2 { font-size: 18px; font-weight: 800; color: #1a237e; margin-bottom: 6px; border-bottom: 2px solid #1a237e; padding-bottom: 4px; }
+  h3 { font-size: 14px; font-weight: 700; color: #283593; margin-top: 14px; margin-bottom: 6px; }
+  p { font-size: 12px; color: #424242; margin-bottom: 10px; }
+  ul, ol { padding-left: 20px; margin-bottom: 10px; }
+  li { font-size: 12px; margin-bottom: 4px; color: #424242; }
+  strong { color: #1a237e; }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 14px; }
+  th { background: #1a237e; color: #fff; padding: 7px 8px; text-align: left; font-size: 11px; font-weight: 700; }
+  td { padding: 6px 8px; border-bottom: 1px solid #e0e0e0; font-size: 11px; vertical-align: top; }
+  tr:nth-child(even) td { background: #f9f9f9; }
+
+  /* Problem cards */
+  .problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .problem-card { border: 2px solid #c62828; border-radius: 6px; padding: 14px; background: #fff8f8; }
+  .problem-card h4 { font-size: 13px; font-weight: 700; color: #c62828; margin-bottom: 6px; }
+  .problem-card p { font-size: 11px; margin-bottom: 0; }
+
+  /* Solution cards */
+  .solution-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .solution-card { border: 2px solid #2e7d32; border-radius: 6px; padding: 14px; background: #f8fff8; }
+  .solution-card h4 { font-size: 13px; font-weight: 700; color: #2e7d32; margin-bottom: 6px; }
+  .solution-card p { font-size: 11px; margin-bottom: 0; }
+
+  /* Diagram */
+  .diagram-row { display: flex; justify-content: center; gap: 40px; margin: 16px 0; align-items: flex-start; }
+  .diagram-col { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .diagram-box { border: 2px solid; border-radius: 6px; padding: 10px 16px; text-align: center; font-size: 11px; font-weight: 700; }
+  .diagram-box.current { border-color: #c62828; background: #ffebee; color: #c62828; }
+  .diagram-box.target { border-color: #2e7d32; background: #e8f5e9; color: #2e7d32; }
+  .diagram-box.shared { border-color: #f9a825; background: #fff9c4; color: #f57f17; }
+  .diagram-box.ai { border-color: #7b1fa2; background: #f3e5f5; color: #7b1fa2; }
+  .diagram-arrow { font-size: 16px; color: #757575; }
+  .diagram-label { font-size: 10px; font-weight: 700; color: #616161; }
+
+  /* Cost-benefit boxes */
+  .spend-box { background: #ffebee; border-left: 4px solid #c62828; padding: 14px 18px; margin: 12px 0; border-radius: 6px; }
+  .save-box { background: #e8f5e9; border-left: 4px solid #2e7d32; padding: 14px 18px; margin: 12px 0; border-radius: 6px; }
+  .result-box { background: #e8eaf6; border-left: 4px solid #1a237e; padding: 14px 18px; margin: 12px 0; border-radius: 6px; }
+  .warning-box { background: #fff9c4; border-left: 4px solid #f9a825; padding: 12px 16px; margin: 12px 0; border-radius: 6px; font-size: 11px; color: #424242; }
+  .spend-box h4, .save-box h4, .result-box h4 { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+  .spend-box h4 { color: #c62828; }
+  .save-box h4 { color: #2e7d32; }
+  .result-box h4 { color: #1a237e; }
+
+  /* P&L table */
+  .pnl-table th { font-size: 10px; white-space: nowrap; }
+  .pnl-table td { font-size: 10px; text-align: right; font-weight: 600; }
+  .pnl-table td:first-child { text-align: left; font-weight: 700; color: #424242; }
+  .pnl-table tr.spend-row td { background: #ffebee; }
+  .pnl-table tr.save-row td { background: #e8f5e9; }
+  .pnl-table tr.total-row td { font-weight: 800; border-top: 2px solid #1a237e; background: #e8eaf6; }
+  .pnl-table tr.profit-row td { font-weight: 800; }
+  .pnl-table tr.cumulative-row td { font-weight: 800; background: #fff9c4; }
+  .pnl-positive { color: #2e7d32; }
+  .pnl-negative { color: #c62828; }
+
+  /* Timeline */
+  .timeline-table tr.highlight td { background: #fff9c4; font-weight: 700; }
+
+  /* Approach tracks */
+  .track-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 14px; }
+  .track-card { border: 2px solid #e0e0e0; border-radius: 6px; padding: 14px; }
+  .track-card h4 { font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+  .track-card.a { border-color: #1565c0; }
+  .track-card.a h4 { color: #1565c0; }
+  .track-card.b { border-color: #e65100; }
+  .track-card.b h4 { color: #e65100; }
+  .track-card ul { margin-bottom: 0; }
+
+  @media print { @page { size: A4 landscape; } .canvas { width: auto; background: #fff; } .section-frame { break-inside: avoid; } }
+</style>
+</head>
+<body>
+<div class="canvas">
+
+<!-- TITLE -->
+<div class="title-block">
+  <h1>IAGPTフェーズ2: Zendesk取り込み・置き換え準備</h1>
+  <div class="subtitle">ビジネス要件定義書 — ビジュアルサマリー</div>
+  <div class="meta">作成者: Choo · 2026年7月 · 承認者: 有滝さん、西社長</div>
+</div>
+
+<!-- ===== SECTION 1: CURRENT SITUATION ===== -->
+<div class="section-frame">
+  <div class="section-label">1 — 現状: Zendeskの課題</div>
+  <div class="section-content">
+    <h2>現在の状況</h2>
+    <p>Zendeskは現在、<strong>58の承認済みサポートナレッジ記事</strong>と運用ワークフローを保持しています。3〜4名のサポートスタッフは<strong>3つのシステム</strong>（Zendesk、Confluence、社内ドキュメント）を検索して回答を見つける必要があり、1人あたり推定<strong>週2時間</strong>を無駄にしています。</p>
+
+    <div class="diagram-row">
+      <div class="diagram-col">
+        <div class="diagram-label">現状: 3つの分散ナレッジソース</div>
+        <div style="display: flex; gap: 8px;">
+          <div class="diagram-box current">Zendesk<br>(58記事)</div>
+          <div class="diagram-box current">Confluence<br>(フェーズ1)</div>
+          <div class="diagram-box current">社内<br>ドキュメント</div>
+        </div>
+        <div class="diagram-arrow">↓ ↓ ↓</div>
+        <div class="diagram-box current" style="min-width: 200px;">スタッフが3システムを検索<br>1人あたり週2時間無駄</div>
+        <div class="diagram-arrow">↓</div>
+        <div class="diagram-box shared" style="min-width: 120px;">~¥400〜480万/年<br>Zendeskコスト</div>
+      </div>
+    </div>
+
+    <h3>4つの主要な課題</h3>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <h4>1. ベンダー依存</h4>
+        <p>IAはナレッジプラットフォームを管理していない。Zendeskが値上げや機能変更を行ってもIAには交渉力がない。</p>
+      </div>
+      <div class="problem-card">
+        <h4>2. 継続コスト（~¥400〜480万/年）</h4>
+        <p>Suite Team、4エージェント、$55/エージェント/月。実際の使用量に関わらず毎年発生するコスト。</p>
+      </div>
+      <div class="problem-card">
+        <h4>3. ナレッジの分散</h4>
+        <p>サポートナレッジが3システムに分散。スタッフは週2時間を検索に無駄に — これは<strong>~¥830万/年</strong>のスタッフ時間損失（4名×2h×52週×¥2万/h）。</p>
+      </div>
+      <div class="problem-card">
+        <h4>4. AI統合パスなし</h4>
+        <p>ZendeskのナレッジはIAGPT AIワークフローに使えない。スタッフはサポートナレッジに基づいたAI支援回答を得られない。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 2: IDEAL SITUATION ===== -->
+<div class="section-frame">
+  <div class="section-label">2 — 理想状態: フェーズ2がどう課題を解決するか</div>
+  <div class="section-content">
+    <h2>目標: 統一されたナレッジベース、AI駆動、IA管理</h2>
+    <p>承認済みZendeskナレッジをIAGPTに取り込む。スタッフは<strong>3システムではなく1つのシステム</strong>を検索。準備が整ったらZendeskを完全に置き換える。</p>
+
+    <div class="diagram-row">
+      <div class="diagram-col">
+        <div class="diagram-label">目標: 統一IAGPTナレッジベース</div>
+        <div class="diagram-box target" style="min-width: 280px;">IAGPTナレッジベース<br>(58 Zendesk記事 + Confluence + デジタルテキスト)</div>
+        <div class="diagram-arrow">↓</div>
+        <div class="diagram-box ai" style="min-width: 200px;">AI支援回答<br>(スタッフのみ、人間レビュー付き)</div>
+        <div class="diagram-arrow">↓</div>
+        <div class="diagram-box target" style="min-width: 160px;">スタッフ週2時間節約<br>~¥830万/年回収</div>
+        <div class="diagram-arrow">↓ (フェーズ4 + 2027年2月決定後)</div>
+        <div class="diagram-box target" style="min-width: 160px;">Zendesk解約<br>~¥400〜480万/年節約</div>
+      </div>
+    </div>
+
+    <h3>各課題の解決方法</h3>
+    <div class="solution-grid">
+      <div class="solution-card">
+        <h4>ベンダー依存 → IA管理</h4>
+        <p>ナレッジがIAGPTに移行され、IAが所有・管理。ベンダーロックイン解消。</p>
+      </div>
+      <div class="solution-card">
+        <h4>継続コスト → 排除（フェーズ4後）</h4>
+        <p>Zendesk解約時（目標: 2027年2月）、~¥400〜480万/年の支出が停止。フェーズ2はこの決定の基盤を構築。</p>
+      </div>
+      <div class="solution-card">
+        <h4>分散 → 統一検索</h4>
+        <p>スタッフはIAGPTのみ検索 — Zendesk + Confluenceナレッジが1箇所に。2026年7月から直ちに週2時間/人を回収。</p>
+      </div>
+      <div class="solution-card">
+        <h4>AIパスなし → AI支援回答</h4>
+        <p>IAGPTがサポートナレッジに基づくAI支援回答を提供。スタッフはより良い回答をより速く取得、品質は人間がレビュー。</p>
+      </div>
+    </div>
+
+    <h3>フェーズ2のアプローチ: 2つのトラック</h3>
+    <div class="track-grid">
+      <div class="track-card a">
+        <h4>フェーズ2A — ナレッジ取り込み</h4>
+        <ul>
+          <li>58の承認済みZendesk記事をスタッフ専用IAGPTに取り込み</li>
+          <li>サポート/スクールデスクが各記事の正確性をレビュー</li>
+          <li>スタッフがIAGPTでサポート回答を検索・利用可能</li>
+          <li>推定工数: ~87h（レビュー + 取り込み + テスト）</li>
+        </ul>
+      </div>
+      <div class="track-card b">
+        <h4>フェーズ2B — 置き換え準備</h4>
+        <ul>
+          <li>チャット、チケット、エスカレーション、レポート、運用ワークフローを特定</li>
+          <li>各Zendesk機能を分類: 「IAGPTに置き換え」または「Zendeskに維持」</li>
+          <li>ギャップ分析 — 解約前に構築すべきものを特定</li>
+          <li>フェーズ2では置き換え作業は行わない — インベントリと計画のみ</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>タイムライン</h3>
+    <table class="timeline-table">
+      <tr><th style="width:15%">時期</th><th>マイルストーン</th><th>決定ゲート</th></tr>
+      <tr><td>2026年6月</td><td>フェーズ2 BRD + TS作成</td><td>取り込み・準備作業のスコープ承認</td></tr>
+      <tr><td>2026年7月</td><td>フェーズ2本番リリース</td><td>スタッフがIAGPT使用開始 → 時間節約開始</td></tr>
+      <tr><td>2026年9月</td><td>フェーズ3 BRD（デジタルテキスト）</td><td>フェーズ2のナレッジアプローチに依存</td></tr>
+      <tr><td>2026年11月</td><td>フェーズ4 BRD（顧客向けAI）</td><td>顧客向けスコープとコントロールを定義</td></tr>
+      <tr><td>2027年1月</td><td>フェーズ4ユーザーテスト</td><td>品質、コントロール、ワークフローを検証</td></tr>
+      <tr class="highlight"><td><strong>2027年2月</strong></td><td><strong>フェーズ4本番リリース</strong></td><td><strong>Zendesk置き換え/解約準備決定の目標</strong></td></tr>
+    </table>
+
+    <div class="warning-box">
+      <strong>重要な境界:</strong> フェーズ2はスタッフのみ（顧客向けAIなし）。即時Zendesk解約なし — それは2027年2月にフェーズ4が本番稼働し品質ゲート通過後の別決定。
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 3: COST-BENEFIT / P&L ===== -->
+<div class="section-frame">
+  <div class="section-label">3 — コスト・ベネフィット: 投資、節約、損益分岐</div>
+  <div class="section-content">
+    <h2>財務サマリー</h2>
+    <p>フェーズ2の投資は、スタッフ時間節約のみで約<strong>2ヶ月</strong>で回収可能 — Zendesk解約前でも。</p>
+
+    <div class="spend-box">
+      <h4>🔴 支出（一時）</h4>
+      <table style="margin-bottom: 0;">
+        <tr><th style="width:35%">コスト</th><th style="width:15%">金額</th><th>内容</th></tr>
+        <tr><td>取り込み作業（開発時間）</td><td><strong>~¥174万</strong></td><td>87時間 × ¥2万/h — 58 Zendesk記事のレビュー、承認、取り込み、テスト</td></tr>
+        <tr style="font-weight: 800; background: #ffcdd2;"><td>一時コスト合計</td><td>~¥174万</td><td>新規インフラ不要 — 既存IAGPTとAIハードウェアを使用</td></tr>
+      </table>
+    </div>
+
+    <div class="save-box">
+      <h4>🟢 毎年の節約（継続）</h4>
+      <table style="margin-bottom: 0;">
+        <tr><th style="width:35%">節約項目</th><th style="width:15%">年間金額</th><th>仕組み</th></tr>
+        <tr><td>スタッフ時間節約</td><td><strong>~¥830万</strong></td><td>4名 × 週2h × 52週 × ¥2万/h — 3システムではなくIAGPT1回の検索</td></tr>
+        <tr><td>Zendeskサブスクリプション（解約時）</td><td><strong>~¥400〜480万</strong></td><td>Suite Team、4エージェント、$55/エージェント/月。フェーズ4 + 2027年2月決定後に解約</td></tr>
+        <tr style="font-weight: 800; background: #c8e6c9;"><td>継続節約合計</td><td>~¥1,230〜1,310万/年</td><td>IAGPTがZendeskを置き換えている限り毎年</td></tr>
+      </table>
+    </div>
+
+    <div class="result-box">
+      <h4>🔵 最終結果</h4>
+      <table style="margin-bottom: 0;">
+        <tr><th style="width:35%">サマリー</th><th style="width:15%">金額</th><th>意味</th></tr>
+        <tr><td>一時投資</td><td><strong>~¥174万</strong></td><td>ZendeskナレッジをIAGPTに取り込むために1回支出</td></tr>
+        <tr><td>年間節約</td><td><strong>~¥1,230〜1,310万/年</strong></td><td>スタッフ時間 + Zendesk解約により毎年節約</td></tr>
+        <tr style="font-weight: 800; background: #c8e6c9;"><td>回収期間</td><td><strong>約2ヶ月</strong></td><td>¥174万の投資はスタッフ時間節約のみで約2ヶ月で回収</td></tr>
+      </table>
+    </div>
+
+    <h3>P&Lシミュレーション: 損益分岐はいつ？</h3>
+    <p>スタッフ時間節約は2026年7月（フェーズ2本番稼働時）に<strong>直ちに</strong>開始。Zendesk節約は<strong>2027年2月</strong>の準備決定後に開始。以下は年次予測:</p>
+
+    <table class="pnl-table">
+      <tr>
+        <th style="width:22%">サマリー</th>
+        <th>2026年7–12月</th>
+        <th>2027年1–6月</th>
+        <th>2027年7–12月</th>
+        <th>2028年1–6月</th>
+        <th>2028年7–12月</th>
+        <th>2029年1–6月</th>
+      </tr>
+      <tr class="spend-row">
+        <td>一時コスト（取り込み）</td>
+        <td class="pnl-negative">-¥174万</td>
+        <td>¥0</td>
+        <td>¥0</td>
+        <td>¥0</td>
+        <td>¥0</td>
+        <td>¥0</td>
+      </tr>
+      <tr class="save-row">
+        <td>スタッフ時間節約</td>
+        <td class="pnl-positive">+¥415万</td>
+        <td class="pnl-positive">+¥415万</td>
+        <td class="pnl-positive">+¥415万</td>
+        <td class="pnl-positive">+¥415万</td>
+        <td class="pnl-positive">+¥415万</td>
+        <td class="pnl-positive">+¥415万</td>
+      </tr>
+      <tr class="save-row">
+        <td>Zendesk節約（2027年2月以降）</td>
+        <td>¥0</td>
+        <td>¥0</td>
+        <td class="pnl-positive">+¥200〜240万</td>
+        <td class="pnl-positive">+¥200〜240万</td>
+        <td class="pnl-positive">+¥200〜240万</td>
+        <td class="pnl-positive">+¥200〜240万</td>
+      </tr>
+      <tr class="profit-row">
+        <td>半期利益/(損失)</td>
+        <td class="pnl-positive">+¥241万</td>
+        <td class="pnl-positive">+¥415万</td>
+        <td class="pnl-positive">+¥615〜655万</td>
+        <td class="pnl-positive">+¥615〜655万</td>
+        <td class="pnl-positive">+¥615〜655万</td>
+        <td class="pnl-positive">+¥615〜655万</td>
+      </tr>
+      <tr class="cumulative-row">
+        <td>累計</td>
+        <td class="pnl-positive">+¥241万</td>
+        <td class="pnl-positive">+¥656万</td>
+        <td class="pnl-positive">+¥1,271〜1,311万</td>
+        <td class="pnl-positive">+¥1,886〜1,966万</td>
+        <td class="pnl-positive">+¥2,501〜2,621万</td>
+        <td class="pnl-positive">+¥3,116〜3,276万</td>
+      </tr>
+    </table>
+
+    <div class="result-box" style="margin-top: 12px;">
+      <p style="margin-bottom: 4px;"><strong>📈 損益分岐: 最初の6ヶ月以内。</strong></p>
+      <p style="margin-bottom: 0; font-size: 11px;">
+        ¥174万の投資は2026年9月頃（2026年7月本番稼働から2ヶ月）にスタッフ時間節約のみで回収。それ以降、節約された毎円は純粋な継続ベネフィット。Zendesk解約節約（~¥400〜480万/年）は2027年2月決定から追加。
+      </p>
+    </div>
+
+    <div class="warning-box">
+      <strong>タイミングに関する注意:</strong><br>
+      • スタッフ時間節約（~¥830万/年）は2026年7月にフェーズ2が本番稼働した時点で開始 — スタッフが3システム検索の代わりにIAGPTを使用開始。<br>
+      • Zendeskサブスクリプション節約（~¥400〜480万/年）はフェーズ4本番稼働後、2027年2月の準備決定通過後に開始。<br>
+      • Zendeskコスト推定（~¥400〜480万/年）はSuite Team価格（$55/エージェント/月、4エージェント、¥150/USD）に基づく。実際の契約金額は調達で確認が必要。
+    </div>
+
+    <h3>承認依頼</h3>
+    <table>
+      <tr><th style="width:30%">項目</th><th>決定事項</th></tr>
+      <tr><td><strong>フェーズ2承認</strong></td><td>フェーズ2A取り込み + フェーズ2B置き換え準備作業を承認</td></tr>
+      <tr><td><strong>投資</strong></td><td>~¥174万一時（87h開発時間）。新規インフラなし。</td></tr>
+      <tr><td><strong>期待リターン</strong></td><td>~¥830万/年スタッフ節約（2026年7月〜）+ ~¥400〜480万/年Zendesk節約（2027年2月〜）</td></tr>
+      <tr><td><strong>回収期間</strong></td><td>約2ヶ月</td></tr>
+      <tr><td><strong>境界</strong></td><td>即時Zendesk解約なし。フェーズ2では顧客向けAIなし。</td></tr>
+    </table>
+  </div>
+</div>
+
+</div><!-- /canvas -->
+</body>
+</html>
