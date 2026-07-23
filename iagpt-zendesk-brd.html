@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IAGPT Phase 2: Zendesk BRD (Revised)</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    background: #f5f5f5; color: #212121; line-height: 1.6; padding: 20px;
+  }
+  .doc {
+    max-width: 800px; margin: 0 auto; background: #fff; padding: 48px 60px;
+    border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  h1 { font-size: 24px; font-weight: 700; color: #1a237e; margin-bottom: 8px; border-bottom: 3px solid #1a237e; padding-bottom: 8px; }
+  h2 { font-size: 18px; font-weight: 700; color: #1a237e; margin-top: 32px; margin-bottom: 12px; border-bottom: 1px solid #e0e0e0; padding-bottom: 4px; }
+  h3 { font-size: 15px; font-weight: 700; color: #283593; margin-top: 20px; margin-bottom: 8px; }
+  p { font-size: 13px; margin-bottom: 12px; color: #424242; }
+  ul, ol { padding-left: 24px; margin-bottom: 12px; }
+  li { font-size: 13px; margin-bottom: 6px; color: #424242; }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 12px; }
+  th { background: #1a237e; color: #fff; padding: 8px 10px; text-align: left; font-weight: 700; font-size: 12px; }
+  td { padding: 8px 10px; border-bottom: 1px solid #e0e0e0; vertical-align: top; }
+  tr:nth-child(even) td { background: #f9f9f9; }
+  .highlight-box { background: #e8eaf6; border-left: 4px solid #1a237e; padding: 14px 18px; margin: 16px 0; border-radius: 4px; }
+  .highlight-box p { margin-bottom: 6px; }
+  .cost-box { background: #e8f5e9; border-left: 4px solid #2e7d32; padding: 14px 18px; margin: 16px 0; border-radius: 4px; }
+  .cost-box p { margin-bottom: 6px; }
+  .warning-box { background: #fff9c4; border-left: 4px solid #f9a825; padding: 14px 18px; margin: 16px 0; border-radius: 4px; font-size: 12px; }
+  .num { font-weight: 700; color: #1a237e; }
+  .meta { font-size: 12px; color: #757575; margin-bottom: 24px; }
+  strong { color: #1a237e; }
+  .section-divider { border: none; border-top: 2px dashed #e0e0e0; margin: 32px 0; }
+  .toc { background: #f5f5f5; padding: 16px 20px; border-radius: 6px; margin-bottom: 24px; }
+  .toc h3 { margin-top: 0; }
+  .toc ol { margin-bottom: 0; }
+  .toc li { font-size: 12px; }
+  @media print { body { background: #fff; padding: 0; } .doc { box-shadow: none; max-width: 100%; padding: 20px; } }
+</style>
+</head>
+<body>
+<div class="doc">
+
+<h1>IAGPT Phase 2: Zendesk Ingestion and Replacement Readiness — BRD</h1>
+<p class="meta">Revised: July 2026 · Prepared by: Choo · Status: Submission draft</p>
+
+<div class="toc">
+  <h3>Contents</h3>
+  <ol>
+    <li>Project Snapshot</li>
+    <li>Executive Summary</li>
+    <li>IAGPT Roadmap Context</li>
+    <li>What This Means for Staff</li>
+    <li>Approval Request</li>
+    <li>Business Problem and Opportunity</li>
+    <li>Phase 2 Approach</li>
+    <li>Target Roadmap and Decision Gates</li>
+    <li>Scope and Phase 2 Boundaries</li>
+    <li>Objectives and Success Metrics</li>
+    <li>Current vs Target Process</li>
+    <li>Stakeholders and Governance</li>
+    <li>Requirements</li>
+    <li>Assumptions, Constraints, and Dependencies</li>
+    <li>Risks</li>
+    <li>Acceptance Criteria</li>
+    <li>Open Items Before Final Approval</li>
+    <li>Cost-Benefit Summary</li>
+    <li>References</li>
+  </ol>
+</div>
+
+<!-- 1. PROJECT SNAPSHOT -->
+<h2>1. Project Snapshot</h2>
+<table>
+  <tr><th style="width:30%">Field</th><th>Value</th></tr>
+  <tr><td><strong>Project</strong></td><td>IAGPT Phase 2: Zendesk Ingestion and Replacement Readiness</td></tr>
+  <tr><td><strong>Prepared by</strong></td><td>Choo</td></tr>
+  <tr><td><strong>Primary decision needed</strong></td><td>Approve Phase 2 planning/build work for Zendesk ingestion and replacement readiness</td></tr>
+  <tr><td><strong>Key approvers</strong></td><td>Aritaki-san and President Nishi</td></tr>
+  <tr><td><strong>Quality owner</strong></td><td>Support / School Desk</td></tr>
+  <tr><td><strong>Status</strong></td><td>Submission draft; contract, cost, workflow, and quality open items remain</td></tr>
+</table>
+
+<!-- 2. EXECUTIVE SUMMARY -->
+<h2>2. Executive Summary</h2>
+<p>IA is building IAGPT as a staged AI support platform. Phase 1 ingested Confluence documentation into an internal chatbot. Phase 2 addresses the Zendesk dependency by ingesting approved Zendesk knowledge into staff-only IAGPT and by defining the workflow foundation needed to eventually reduce or replace Zendesk.</p>
+<p>Phase 2 does <strong>not</strong> approve immediate Zendesk cancellation or customer-facing AI. It supports a target readiness decision in <strong>February 2027</strong>, after Phase 4 live-server release, to decide whether Zendesk can be reduced or cancelled based on quality, workflow, contract timing, cost/savings, staff adoption, and support continuity.</p>
+
+<div class="highlight-box">
+  <p><strong>Concrete numbers at a glance:</strong></p>
+  <ul style="margin-bottom: 0;">
+    <li><strong>58 Zendesk articles</strong> to ingest into IAGPT (approved knowledge only)</li>
+    <li><strong>3–4 support staff</strong> affected — they currently switch between Zendesk, Confluence, and internal docs to find answers</li>
+    <li><strong>Estimated Zendesk cost:</strong> ~¥330,000–400,000/month (Suite Team, 4 agents at $55/agent/month) → ~¥4–4.8M/year</li>
+    <li><strong>Staff time savings:</strong> ~2h/week per staff × 4 staff × ¥20,000/h × 52 weeks = ~¥8.3M/year</li>
+    <li><strong>Total annual benefit if Zendesk replaced:</strong> ~¥12.3–13.1M/year (cost + time savings)</li>
+    <li><strong>Ingestion effort:</strong> 58 articles × ~1.5h each = ~87h = ~¥1.74M one-time</li>
+    <li><strong>Investment payback:</strong> ~2 months (staff time savings alone)</li>
+  </ul>
+</div>
+
+<!-- 3. ROADMAP CONTEXT -->
+<h2>3. IAGPT Roadmap Context</h2>
+<p>The roadmap should be read as one staged program, not separate isolated projects:</p>
+<table>
+  <tr><th>Phase</th><th>What it does</th><th>Status</th></tr>
+  <tr><td><strong>Phase 1</strong></td><td>Confluence documentation ingestion → internal AI chatbot</td><td>Complete</td></tr>
+  <tr><td><strong>Phase 2</strong></td><td>Zendesk knowledge ingestion → IA-controlled support workflow foundation</td><td><strong>This BRD</strong></td></tr>
+  <tr><td><strong>Phase 3</strong></td><td>Digital text ingestion</td><td>Planned (Sep 2026 BRD)</td></tr>
+  <tr><td><strong>Phase 4</strong></td><td>Customer-facing AI chatbot</td><td>Planned (Nov 2026 BRD)</td></tr>
+</table>
+
+<!-- 4. WHAT THIS MEANS FOR STAFF -->
+<h2>4. What This Means for Staff</h2>
+<ul>
+  <li>Phase 2 remains <strong>staff-only</strong> — no customer-facing AI</li>
+  <li>Support / School Desk validates answer quality and workflow usefulness</li>
+  <li>IAGPT does not automatically send AI answers to customers in Phase 2</li>
+  <li>Zendesk remains available until replacement readiness is accepted</li>
+  <li><strong>Staff experience improvement:</strong> Instead of searching 3 separate sources (Zendesk, Confluence, internal docs), staff search one unified IAGPT knowledge base</li>
+  <li><strong>Estimated time savings:</strong> ~2h/week per staff member reclaimed from searching across fragmented sources</li>
+  <li>Chat/ticketing replacement work is investigated and added progressively, not assumed complete on day one</li>
+</ul>
+
+<!-- 5. APPROVAL REQUEST -->
+<h2>5. Approval Request</h2>
+<table>
+  <tr><th style="width:30%">Item</th><th>Decision requested</th></tr>
+  <tr><td><strong>Phase 2 approval</strong></td><td>Approve Phase 2A ingestion and Phase 2B replacement readiness work</td></tr>
+  <tr><td><strong>Approval boundary</strong></td><td>No immediate Zendesk cancellation; no customer-facing AI in Phase 2</td></tr>
+  <tr><td><strong>February 2027 target</strong></td><td>Readiness/cutover decision, not automatic cancellation</td></tr>
+  <tr><td><strong>Quality owner</strong></td><td>Support / School Desk validates answer and workflow quality</td></tr>
+  <tr><td><strong>Decision status</strong></td><td>Open items remain before cutover</td></tr>
+  <tr><td><strong>Investment</strong></td><td>~¥1.74M one-time ingestion effort (87h × ¥20K/h). No new infrastructure — uses existing IAGPT and AI hardware.</td></tr>
+  <tr><td><strong>Expected return</strong></td><td>~¥8.3M/year staff time savings + ~¥4–4.8M/year Zendesk cost savings = ~¥12.3–13.1M/year total benefit when fully implemented</td></tr>
+</table>
+
+<!-- 6. BUSINESS PROBLEM -->
+<h2>6. Business Problem and Opportunity</h2>
+<h3>Current situation</h3>
+<p>Zendesk currently holds <strong>58 approved support knowledge articles</strong> and operational workflows. This creates:</p>
+<ol>
+  <li><strong>Vendor dependency</strong> — IA does not control the knowledge platform. If Zendesk raises prices or changes features, IA has no leverage.</li>
+  <li><strong>Recurring contract cost</strong> — estimated <strong>¥4–4.8M/year</strong> (Suite Team, 4 agents). This cost continues every year regardless of usage.</li>
+  <li><strong>Knowledge fragmentation</strong> — support knowledge is split across Zendesk, Confluence, and internal docs. Staff search <strong>3 separate systems</strong> to find answers, wasting an estimated <strong>2h/week per person</strong>.</li>
+  <li><strong>No AI integration path</strong> — Zendesk knowledge cannot be used in IAGPT AI workflows. Staff cannot get AI-assisted answers grounded in support knowledge.</li>
+</ol>
+
+<h3>The opportunity</h3>
+<p>Bring approved Zendesk knowledge into IAGPT first (Phase 2A), then use Phase 2 findings to identify which Zendesk functions can be replaced, which must be retained, and what must be built before a safe contract reduction or cancellation decision (Phase 2B).</p>
+
+<div class="cost-box">
+  <p><strong>Concrete benefit if Zendesk is fully replaced:</strong></p>
+  <table style="margin-bottom: 0;">
+    <tr><th>Benefit category</th><th>Annual savings</th><th>How</th></tr>
+    <tr><td>Zendesk subscription cost</td><td>¥4–4.8M/year</td><td>No more per-agent subscription</td></tr>
+    <tr><td>Support staff time (4 staff × 2h/week)</td><td>¥8.3M/year</td><td>One unified search instead of 3 systems</td></tr>
+    <tr style="font-weight: 800;"><td>Total annual benefit</td><td>~¥12.3–13.1M/year</td><td></td></tr>
+  </table>
+</div>
+<div class="warning-box">
+  <strong>Note:</strong> Full replacement requires Phase 4 (customer-facing AI) to be live and accepted. Phase 2 builds the foundation — it does not guarantee cancellation.
+</div>
+
+<!-- 7. PHASE 2 APPROACH -->
+<h2>7. Phase 2 Approach</h2>
+<p>Phase 2 has two tracks:</p>
+<h3>Phase 2A — Knowledge Ingestion Track</h3>
+<ul>
+  <li>58 approved Zendesk articles are imported into staff-only IAGPT</li>
+  <li>Support / School Desk reviews each article for accuracy and approval</li>
+  <li>Staff can search and use IAGPT for support answers</li>
+  <li>Estimated effort: ~87h (review + ingest + test)</li>
+</ul>
+<h3>Phase 2B — Replacement Readiness Track</h3>
+<ul>
+  <li>Chat, ticketing, support history, escalation, reporting, and operational workflow needs are identified</li>
+  <li>Each Zendesk function is categorized: "replace with IAGPT" or "retain in Zendesk"</li>
+  <li>Gap analysis produced — what must be built before Zendesk can be cancelled</li>
+  <li>No replacement work is done in Phase 2 — only inventory and planning</li>
+</ul>
+
+<!-- 8. TIMELINE -->
+<h2>8. Target Roadmap and Decision Gates</h2>
+<table>
+  <tr><th style="width:18%">Target period</th><th>Roadmap milestone</th><th>Decision gate or note</th></tr>
+  <tr><td>June 2026</td><td>Phase 2 BRD + Detailed TS creation</td><td>Approve scope for ingestion and readiness work</td></tr>
+  <tr><td>July 2026</td><td>Phase 2 development + live release</td><td>Phase 2 live release target; Zendesk remains active</td></tr>
+  <tr><td>August 2026</td><td>Phase 2 digital text management preparation</td><td>Prepare digital text management migration</td></tr>
+  <tr><td>September 2026</td><td>Phase 3 BRD + Detailed TS creation</td><td>Phase 3 depends on Phase 2 knowledge approach</td></tr>
+  <tr><td>October 2026</td><td>Phase 3 development + live release</td><td>Digital text becomes next knowledge source</td></tr>
+  <tr><td>November 2026</td><td>Phase 4 BRD + Detailed TS creation</td><td>Define customer-facing scope and controls</td></tr>
+  <tr><td>December 2026</td><td>Phase 4 development + test server release</td><td>Customer-facing release remains test-only</td></tr>
+  <tr><td>January 2027</td><td>Phase 4 user testing + feedback adjustment</td><td>Validate customer-facing quality, controls, and workflow</td></tr>
+  <tr style="background: #fff9c4;"><td><strong>February 2027</strong></td><td><strong>Phase 4 live server release</strong></td><td><strong>Target Zendesk replacement/cancellation readiness decision</strong></td></tr>
+</table>
+
+<!-- 9. SCOPE -->
+<h2>9. Scope and Phase 2 Boundaries</h2>
+<table>
+  <tr><th style="width:18%">Area</th><th style="width:35%">Phase 2 decision</th><th>Notes</th></tr>
+  <tr><td>In scope</td><td>Approved Zendesk knowledge (58 articles) in staff-only IAGPT</td><td>Knowledge ingestion track</td></tr>
+  <tr><td>In scope</td><td>Chat/ticketing workflow inventory and gap plan</td><td>Replacement readiness track</td></tr>
+  <tr><td>Future decision</td><td>Zendesk reduction/cancellation</td><td>Only after acceptance gates pass (Feb 2027)</td></tr>
+  <tr><td>Out of scope</td><td>Customer-facing AI chatbot</td><td>Requires separate Phase 4 approval</td></tr>
+  <tr><td>Out of scope</td><td>Raw ticket history ingestion</td><td>Unless separately approved</td></tr>
+</table>
+
+<hr class="section-divider">
+
+<!-- 10. OBJECTIVES -->
+<h2>10. Objectives and Success Metrics</h2>
+<table>
+  <tr><th>Metric</th><th>Target</th><th>Measurement method</th><th>Why it matters</th></tr>
+  <tr><td>Knowledge coverage</td><td><strong>100% of 58 approved articles</strong> searchable in IAGPT</td><td>Source inventory + test queries</td><td>Ensures no knowledge is lost in migration</td></tr>
+  <tr><td>Answer quality</td><td><strong>≥80% correct</strong> on test queries from approved Zendesk knowledge</td><td>Support review (sampled test queries)</td><td>Ensures AI answers are trustworthy, not just present</td></tr>
+  <tr><td>Staff time savings</td><td><strong>≥1.5h/week per staff member</strong> reclaimed from searching fragmented sources</td><td>Staff survey + time tracking before/after</td><td>Direct cost reduction (~¥6.2M/year at 1.5h)</td></tr>
+  <tr><td>Replacement readiness</td><td><strong>All Zendesk workflows categorized</strong> as "replace" or "retain" with gap plan</td><td>Gap analysis document</td><td>Enables informed cancellation decision</td></tr>
+  <tr><td>Contract readiness</td><td><strong>Zendesk cost, renewal date, and notice period confirmed</strong></td><td>Finance/procurement review</td><td>Ensures cancellation is legally and financially viable</td></tr>
+  <tr><td>Roadmap readiness</td><td><strong>Phase 3/4 dependencies identified and documented</strong></td><td>Roadmap review</td><td>Ensures smooth handoff to next phases</td></tr>
+</table>
+
+<!-- 11. CURRENT VS TARGET -->
+<h2>11. Current vs Target Process</h2>
+<table>
+  <tr><th style="width:18%">Area</th><th>Current state</th><th>Phase 2 target</th><th>Phase 4 target (future)</th></tr>
+  <tr><td>Knowledge source</td><td>3 separate systems: Zendesk, Confluence, internal docs</td><td>One unified IAGPT knowledge base (Zendesk + Confluence)</td><td>All IA knowledge in IAGPT</td></tr>
+  <tr><td>Staff support</td><td>Staff search 3 systems, ~2h/week wasted</td><td>Staff search IAGPT only, ~1.5–2h/week saved</td><td>Staff get AI-assisted answers instantly</td></tr>
+  <tr><td>Chat/ticketing</td><td>Zendesk dependency (~¥4–4.8M/year)</td><td>Inventory + gap plan (no replacement yet)</td><td>IAGPT replaces Zendesk chat/ticketing</td></tr>
+  <tr><td>Customer support</td><td>Not customer-facing in Phase 2</td><td>Staff-only, human-reviewed answers</td><td>Customer-facing AI with controls (Phase 4)</td></tr>
+  <tr><td>Annual cost</td><td>~¥4–4.8M/year Zendesk + ¥8.3M/year search time = ~¥12.3–13.1M/year</td><td>Foundation for elimination</td><td>~¥12.3–13.1M/year saved when fully replaced</td></tr>
+</table>
+
+<!-- 12. STAKEHOLDERS -->
+<h2>12. Stakeholders and Governance</h2>
+<table>
+  <tr><th style="width:22%">Role</th><th style="width:28%">Who</th><th>Responsibility</th></tr>
+  <tr><td>Project coordinator</td><td>Choo</td><td>BRD, schedule, open items, decision follow-up</td></tr>
+  <tr><td>Quality owner</td><td>Support / School Desk</td><td>Validate answer quality and workflow usefulness</td></tr>
+  <tr><td>Engineering</td><td>Dev team</td><td>Ingestion, system behavior, access controls, technical feasibility</td></tr>
+  <tr><td>Compliance/Legal</td><td>TBD</td><td>Review before broader data use, raw ticket history, or customer-facing release</td></tr>
+  <tr><td>Executive approvers</td><td>Aritaki-san, President Nishi</td><td>Approve Phase 2 scope; February 2027 cutover decision</td></tr>
+</table>
+<h3>Governance cadence</h3>
+<ul>
+  <li>Weekly project review during build phase</li>
+  <li>Support / School Desk quality review for each ingested content batch</li>
+  <li>Scope/change review for chat/ticketing replacement decisions</li>
+  <li>Executive review before any Zendesk reduction or cancellation</li>
+</ul>
+
+<!-- 13. REQUIREMENTS -->
+<h2>13. Requirements</h2>
+<table>
+  <tr><th style="width:15%">Type</th><th style="width:45%">Requirement</th><th>Acceptance indicator</th></tr>
+  <tr><td>Business</td><td>Reduce Zendesk dependency without disrupting support</td><td>Replacement readiness evidence exists</td></tr>
+  <tr><td>Business</td><td>Keep staff/human review for support answers</td><td>No automatic customer response in Phase 2</td></tr>
+  <tr><td>Functional</td><td>Ingest all 58 approved Zendesk articles into IAGPT</td><td>Search/use test passes for all articles</td></tr>
+  <tr><td>Functional</td><td>Support staff use IAGPT for internal support answers</td><td>Staff-only pilot available and tested</td></tr>
+  <tr><td>Functional</td><td>Identify chat/ticketing workflows to replace or retain</td><td>Gap list with replace/retain decisions exists</td></tr>
+  <tr><td>Non-functional</td><td>Limit access to approved internal users in Phase 2</td><td>Access/privacy review completed</td></tr>
+  <tr><td>Operational</td><td>Preserve support history and escalation capability</td><td>Workflow handoff test passes</td></tr>
+  <tr><td>Operational</td><td>Define February 2027 readiness decision criteria</td><td>Decision gate table is complete with concrete thresholds</td></tr>
+</table>
+
+<!-- 14. ASSUMPTIONS -->
+<h2>14. Assumptions, Constraints, and Dependencies</h2>
+<table>
+  <tr><th style="width:15%">Type</th><th style="width:35%">Item</th><th style="width:18%">Owner</th><th>Note</th></tr>
+  <tr><td>Assumption</td><td>Phase 1 IAGPT exists and is usable</td><td>Engineering</td><td>Phase 2 builds on the internal chatbot foundation</td></tr>
+  <tr><td>Assumption</td><td>58 approved Zendesk articles are available for ingestion</td><td>Support / School Desk</td><td>Source scope must be reviewed before ingestion</td></tr>
+  <tr><td>Assumption</td><td>Estimated Zendesk cost ~¥4–4.8M/year (Suite Team, 4 agents, $55/agent/mo at ¥150/USD)</td><td>Procurement</td><td><strong>Needs validation — actual contract may differ</strong></td></tr>
+  <tr><td>Constraint</td><td>No automatic cancellation</td><td>Executive approvers</td><td>Zendesk remains until cutover readiness is accepted</td></tr>
+  <tr><td>Constraint</td><td>Data/privacy boundary</td><td>Compliance / Legal</td><td>Raw history or customer-facing use needs separate approval</td></tr>
+  <tr><td>Dependency</td><td>Quality review availability</td><td>Support / School Desk</td><td>Named reviewers must validate answer quality</td></tr>
+  <tr><td>Dependency</td><td>Zendesk export/API access</td><td>Engineering</td><td>Workflow replacement must respect API/export limits</td></tr>
+  <tr><td>Open item</td><td>Contract and cost timing</td><td>Procurement / Finance / PM</td><td>Must be confirmed before cancellation decision</td></tr>
+</table>
+
+<!-- 15. RISKS -->
+<h2>15. Risks</h2>
+<table>
+  <tr><th style="width:35%">Risk</th><th style="width:15%">Likelihood / Impact</th><th style="width:18%">Owner</th><th>Mitigation</th></tr>
+  <tr><td>Zendesk export/API constraints slow delivery</td><td>Medium / Medium</td><td>Engineering</td><td>Confirm export/API path and fallback manual import</td></tr>
+  <tr><td>Knowledge ingestion succeeds but workflow replacement lags</td><td>Medium / High</td><td>PM / Engineering</td><td>Run Phase 2A and 2B separately with explicit gates</td></tr>
+  <tr><td>Feature parity is larger than expected (more than 58 articles or more workflows)</td><td>High / High</td><td>Support / Engineering</td><td>Inventory functions early and decide replace vs retain</td></tr>
+  <tr><td>Zendesk history contains sensitive data</td><td>Medium / High</td><td>Compliance / Engineering</td><td>Review before raw history use; limit to approved content first</td></tr>
+  <tr><td>Staff adoption is lower than expected</td><td>Medium / Medium</td><td>Support / PM</td><td>Pilot with staff; keep Zendesk until adoption is proven</td></tr>
+  <tr><td>Phase 4 customer-facing controls are underestimated</td><td>Medium / High</td><td>Compliance / PM</td><td>Require compliance and escalation controls before external release</td></tr>
+  <tr><td>Cancellation target may move if gates fail</td><td>Medium / High</td><td>PM / Executives</td><td>Treat February 2027 as readiness decision, not fixed cancellation</td></tr>
+  <tr><td>Actual Zendesk cost differs significantly from estimate</td><td>Low / Low</td><td>Procurement</td><td>Confirm actual contract before including in savings calculations</td></tr>
+</table>
+
+<!-- 16. ACCEPTANCE CRITERIA -->
+<h2>16. Acceptance Criteria</h2>
+<table>
+  <tr><th style="width:8%">ID</th><th style="width:45%">Criterion</th><th style="width:22%">Owner</th><th>Evidence</th></tr>
+  <tr><td>AC-1</td><td>All 58 approved Zendesk articles are searchable and usable in IAGPT</td><td>Engineering</td><td>Search/use test for each article</td></tr>
+  <tr><td>AC-2</td><td>Support / School Desk validates answer quality (≥80% correct on test queries)</td><td>Support / School Desk</td><td>Quality review notes with pass/fail per query set</td></tr>
+  <tr><td>AC-3</td><td>Chat/ticketing workflows are replaced or explicitly retained with gap plan</td><td>Support / Engineering</td><td>Gap analysis document</td></tr>
+  <tr><td>AC-4</td><td>Staff can operate without losing history or escalation capability</td><td>Support / School Desk</td><td>Workflow test results</td></tr>
+  <tr><td>AC-5</td><td>Zendesk cost, savings, and contract timing confirmed before cancellation</td><td>Finance / Procurement</td><td>Cost/contract review with actual figures</td></tr>
+  <tr><td>AC-6</td><td>Phase 2 remains staff-only unless Phase 4 is approved</td><td>PM / Engineering</td><td>Access/release controls verified</td></tr>
+  <tr><td>AC-7</td><td>February 2027 decision uses documented gates with concrete thresholds</td><td>Executive approvers</td><td>Readiness review record</td></tr>
+</table>
+
+<!-- 17. OPEN ITEMS -->
+<h2>17. Open Items Before Final Approval / Cutover Decision</h2>
+<table>
+  <tr><th style="width:30%">Open item</th><th style="width:22%">Owner</th><th style="width:28%">Decision needed</th><th>Target</th></tr>
+  <tr><td>Zendesk contract timing</td><td>Procurement / Finance / PM</td><td>Confirm actual cost, renewal date, and notice period</td><td>Before cutover decision</td></tr>
+  <tr><td>Zendesk source inventory</td><td>Support / School Desk + Engineering</td><td>Confirm 58 articles are the complete approved scope; identify export path</td><td>Before ingestion</td></tr>
+  <tr><td>Quality approver / reviewers</td><td>Support / School Desk</td><td>Name approver and review method</td><td>Before acceptance</td></tr>
+  <tr><td>Chat/ticketing workflow inventory</td><td>Support / School Desk + Engineering</td><td>Map replace/retain gaps for all Zendesk workflows</td><td>During Phase 2 build</td></tr>
+  <tr><td>Privacy/compliance review</td><td>Compliance / Legal</td><td>Approve data handling and customer-facing controls</td><td>Before external release</td></tr>
+  <tr><td>Phase 3/4 dependency list</td><td>PM / Engineering</td><td>Confirm handoff and dependencies</td><td>Before Phase 3/4 start</td></tr>
+</table>
+
+<hr class="section-divider">
+
+<!-- 18. COST-BENEFIT SUMMARY -->
+<h2>18. Cost-Benefit Summary (for management)</h2>
+<div class="cost-box">
+  <table style="margin-bottom: 0;">
+    <tr><th style="width:30%">Category</th><th style="width:20%">Amount</th><th style="width:15%">Type</th><th>Notes</th></tr>
+    <tr><td>Ingestion effort</td><td>~¥1.74M</td><td>One-time</td><td>87h × ¥20K/h (58 articles × 1.5h each)</td></tr>
+    <tr><td>Staff time savings</td><td>~¥8.3M/year</td><td>Recurring</td><td>4 staff × 2h/week × 52 weeks × ¥20K/h</td></tr>
+    <tr><td>Zendesk subscription savings</td><td>~¥4–4.8M/year</td><td>Recurring</td><td>Suite Team, 4 agents (needs validation)</td></tr>
+    <tr style="font-weight: 800; background: #c8e6c9;"><td>Total annual benefit</td><td>~¥12.3–13.1M/year</td><td>Recurring</td><td>When fully implemented (post-Phase 4)</td></tr>
+    <tr style="font-weight: 800; background: #fff9c4;"><td>Investment payback</td><td>~2 months</td><td></td><td>¥1.74M investment vs ¥12.3M/year benefit</td></tr>
+  </table>
+</div>
+<div class="highlight-box">
+  <p><strong>Key point for management:</strong> The Phase 2 investment (~¥1.74M one-time) pays for itself in approximately 2 months of staff time savings alone — even before Zendesk is cancelled. The Zendesk cost savings (~¥4–4.8M/year) are additional upside that comes after Phase 4 is live and the February 2027 readiness decision passes.</p>
+</div>
+
+<!-- 19. REFERENCES -->
+<h2>19. References</h2>
+<ul>
+  <li>System development roadmap (3-year visual plan)</li>
+  <li>Zendesk pricing: https://www.zendesk.co.jp/pricing/ (Suite Team: $55/agent/month, estimated ¥330K/month for 4 agents at ¥150/USD)</li>
+  <li>IAGPT Phase 1 Confluence chatbot: source/details to be linked when confirmed</li>
+  <li>P11 (GitHub Projects) task estimates: IAGPT Phase 2 Zendesk Integration — 362h total estimated across 7 tasks</li>
+</ul>
+
+</div>
+</body>
+</html>
