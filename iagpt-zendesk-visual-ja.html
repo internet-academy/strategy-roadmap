@@ -116,7 +116,7 @@
   <div class="section-label">1 — 現状: Zendeskの課題</div>
   <div class="section-content">
     <h2>現在の状況</h2>
-    <p>Zendeskは現在、<strong>58の承認済みサポートナレッジ記事</strong>と運用ワークフローを保持しています。3〜4名のサポートスタッフは<strong>3つのシステム</strong>（Zendesk、Confluence、社内ドキュメント）を検索して回答を見つける必要があり、1人あたり推定<strong>週2時間</strong>を無駄にしています。</p>
+    <p>Zendeskは現在、<strong>58の承認済みサポートナレッジ記事</strong>と運用ワークフローを保持しています。3〜4名のサポートスタッフは<strong>3つのシステム</strong>（Zendesk、Confluence、社内ドキュメント）を検索して回答を見つける必要があり、1人あたり推定<strong>週2.6時間</strong>を無駄にしています。</p>
 
     <div class="diagram-row">
       <div class="diagram-col">
@@ -127,7 +127,7 @@
           <div class="diagram-box current">社内<br>ドキュメント</div>
         </div>
         <div class="diagram-arrow">↓ ↓ ↓</div>
-        <div class="diagram-box current" style="min-width: 200px;">スタッフが3システムを検索<br>1人あたり週2時間無駄</div>
+        <div class="diagram-box current" style="min-width: 200px;">スタッフが3システムを検索<br>1人あたり週2.6時間無駄</div>
         <div class="diagram-arrow">↓</div>
         <div class="diagram-box shared" style="min-width: 120px;">~¥400〜480万/年<br>Zendeskコスト</div>
       </div>
@@ -145,7 +145,7 @@
       </div>
       <div class="problem-card">
         <h4>3. ナレッジの分散</h4>
-        <p>サポートナレッジが3システムに分散。スタッフは週2時間を検索に無駄に — これは<strong>~¥830万/年</strong>のスタッフ時間損失（4名×2h×52週×¥2万/h）。</p>
+        <p>サポートナレッジが3システムに分散。スタッフは週2.6時間を検索に無駄に — これは<strong>~¥1,100万/年</strong>のスタッフ時間損失（4名×2.6h×52週×¥2万/h、実際のZendeskデータに基づく）。</p>
       </div>
       <div class="problem-card">
         <h4>4. AI統合パスなし</h4>
@@ -169,7 +169,7 @@
         <div class="diagram-arrow">↓</div>
         <div class="diagram-box ai" style="min-width: 200px;">AI支援回答<br>(スタッフのみ、人間レビュー付き)</div>
         <div class="diagram-arrow">↓</div>
-        <div class="diagram-box target" style="min-width: 160px;">スタッフ週2時間節約<br>~¥830万/年回収</div>
+        <div class="diagram-box target" style="min-width: 160px;">スタッフ週2.6時間節約<br>~¥1,100万/年回収</div>
         <div class="diagram-arrow">↓ (フェーズ4 + 2027年2月決定後)</div>
         <div class="diagram-box target" style="min-width: 160px;">Zendesk解約<br>~¥400〜480万/年節約</div>
       </div>
@@ -187,7 +187,7 @@
       </div>
       <div class="solution-card">
         <h4>分散 → 統一検索</h4>
-        <p>スタッフはIAGPTのみ検索 — Zendesk + Confluenceナレッジが1箇所に。2026年7月から直ちに週2時間/人を回収。</p>
+        <p>スタッフはIAGPTのみ検索 — Zendesk + Confluenceナレッジが1箇所に。2026年7月から直ちに週2.6時間/人を回収。</p>
       </div>
       <div class="solution-card">
         <h4>AIパスなし → AI支援回答</h4>
@@ -223,7 +223,9 @@
       <tr><td>2026年6月</td><td>フェーズ2 BRD + TS作成</td><td>取り込み・準備作業のスコープ承認</td></tr>
       <tr><td>2026年7月</td><td>フェーズ2本番リリース</td><td>スタッフがIAGPT使用開始 → 時間節約開始</td></tr>
       <tr><td>2026年9月</td><td>フェーズ3 BRD（デジタルテキスト）</td><td>フェーズ2のナレッジアプローチに依存</td></tr>
+      <tr><td>2026年10月</td><td>フェーズ3開発 + 本番リリース</td><td>デジタルテキストが次のナレッジソースに</td></tr>
       <tr><td>2026年11月</td><td>フェーズ4 BRD（顧客向けAI）</td><td>顧客向けスコープとコントロールを定義</td></tr>
+      <tr><td>2026年12月</td><td>フェーズ4開発 + テストサーバーリリース</td><td>顧客向けリリースはテストのみ</td></tr>
       <tr><td>2027年1月</td><td>フェーズ4ユーザーテスト</td><td>品質、コントロール、ワークフローを検証</td></tr>
       <tr class="highlight"><td><strong>2027年2月</strong></td><td><strong>フェーズ4本番リリース</strong></td><td><strong>Zendesk置き換え/解約準備決定の目標</strong></td></tr>
     </table>
@@ -254,9 +256,9 @@
       <h4>🟢 毎年の節約（継続）</h4>
       <table style="margin-bottom: 0;">
         <tr><th style="width:35%">節約項目</th><th style="width:15%">年間金額</th><th>仕組み</th></tr>
-        <tr><td>スタッフ時間節約</td><td><strong>~¥830万</strong></td><td>4名 × 週2h × 52週 × ¥2万/h — 3システムではなくIAGPT1回の検索</td></tr>
+        <tr><td>スタッフ時間節約</td><td><strong>~¥1,100万</strong></td><td>実際のZendeskデータ: 月1,000リクエスト × 6.4分平均処理時間 → 550h/年節約 → ¥1,100万/年（計算は下記参照）</td></tr>
         <tr><td>Zendeskサブスクリプション（解約時）</td><td><strong>~¥400〜480万</strong></td><td>Suite Team、4エージェント、$55/エージェント/月。フェーズ4 + 2027年2月決定後に解約</td></tr>
-        <tr style="font-weight: 800; background: #c8e6c9;"><td>継続節約合計</td><td>~¥1,230〜1,310万/年</td><td>IAGPTがZendeskを置き換えている限り毎年</td></tr>
+        <tr style="font-weight: 800; background: #c8e6c9;"><td>継続節約合計</td><td>~¥1,540〜1,580万/年</td><td>IAGPTがZendeskを置き換えている限り毎年</td></tr>
       </table>
     </div>
 
@@ -265,10 +267,69 @@
       <table style="margin-bottom: 0;">
         <tr><th style="width:35%">サマリー</th><th style="width:15%">金額</th><th>意味</th></tr>
         <tr><td>一時投資</td><td><strong>~¥174万</strong></td><td>ZendeskナレッジをIAGPTに取り込むために1回支出</td></tr>
-        <tr><td>年間節約</td><td><strong>~¥1,230〜1,310万/年</strong></td><td>スタッフ時間 + Zendesk解約により毎年節約</td></tr>
-        <tr style="font-weight: 800; background: #c8e6c9;"><td>回収期間</td><td><strong>約2ヶ月</strong></td><td>¥174万の投資はスタッフ時間節約のみで約2ヶ月で回収</td></tr>
+        <tr><td>年間節約</td><td><strong>~¥1,540〜1,580万/年</strong></td><td>スタッフ時間 + Zendesk解約により毎年節約</td></tr>
+        <tr style="font-weight: 800; background: #c8e6c9;"><td>回収期間</td><td><strong>約2ヶ月</strong></td><td>¥174万の投資はスタッフ時間節約のみで約2ヶ月で回収（¥1,100万/年）</td></tr>
       </table>
     </div>
+
+    <h3>スタッフ時間節約の計算方法</h3>
+    <p>実際のZendeskダッシュボードデータに基づく: 月約1,000リクエスト、平均処理時間6.4分/リクエスト、4名のサポートスタッフ。</p>
+
+    <div class="result-box">
+      <h4>Zendeskダッシュボードの実データ</h4>
+      <table style="margin-bottom: 8px;">
+        <tr><th style="width:40%">指標</th><th>値</th></tr>
+        <tr><td>月間リクエスト数</td><td>~1,000</td></tr>
+        <tr><td>サポートスタッフ</td><td>4名</td></tr>
+        <tr><td>平均処理時間（スタッフ時間/リクエスト）</td><td>6.4分</td></tr>
+      </table>
+      <p style="margin-bottom: 6px; font-size: 11px;"><strong>処理時間の分布（ダッシュボードより）:</strong></p>
+      <table style="margin-bottom: 0; font-size: 11px;">
+        <tr><th>処理時間</th><th>リクエスト割合</th></tr>
+        <tr><td>0–5分</td><td>44%</td></tr>
+        <tr><td>5–10分</td><td>22%</td></tr>
+        <tr><td>10–30分</td><td>26%</td></tr>
+        <tr><td>30–60分</td><td>6%</td></tr>
+        <tr><td>&gt;60分</td><td>2%</td></tr>
+      </table>
+    </div>
+
+    <div class="save-box">
+      <h4>2つの節約カテゴリー</h4>
+      <table style="margin-bottom: 0;">
+        <tr><th style="width:25%">カテゴリー</th><th style="width:12%">月間リクエスト</th><th style="width:18%">現在の処理時間</th><th style="width:16%">IAGPT導入後</th><th style="width:12%">リクエスト節約</th><th>月間節約</th></tr>
+        <tr><td><strong>自動化可能（50%）</strong><br>シンプルFAQ、ステータス、基本情報</td><td>500</td><td>~3分<br>（0–5分枠）</td><td>~0.5分<br>（スタッフがAI回答をレビュー）</td><td>2.5分</td><td>1,250分</td></tr>
+        <tr><td><strong>人間対応（50%）</strong><br>複雑な質問、判断が必要</td><td>500</td><td>~10分<br>（10–30分枠）</td><td>~7分<br>（統合検索、AI支援）</td><td>3分</td><td>1,500分</td></tr>
+        <tr style="font-weight: 800; background: #c8e6c9;"><td>合計</td><td>1,000</td><td></td><td></td><td></td><td>2,750分 = 46時間</td></tr>
+      </table>
+    </div>
+
+    <div class="result-box">
+      <h4>年間計算</h4>
+      <table style="margin-bottom: 0;">
+        <tr><th style="width:50%">ステップ</th><th>計算</th></tr>
+        <tr><td>月間節約</td><td>2,750分 ÷ 60 = 46時間/月</td></tr>
+        <tr><td>年間節約</td><td>46h × 12ヶ月 = 550時間/年</td></tr>
+        <tr><td>スタッフあたり週間</td><td>46h ÷ 4名 ÷ 4.33週 = ~2.6時間/週</td></tr>
+        <tr><td>年間コスト削減</td><td>550h × ¥2万/h = ~¥1,100万/年</td></tr>
+        <tr><td>処理時間削減率</td><td>2,750分節約 ÷ 6,400分合計 = ~43%のスタッフ処理時間削減</td></tr>
+      </table>
+    </div>
+
+    <h3>チャット自動化見積もり</h3>
+    <p>IAGPTはZendeskチャットの100%を自動化するわけではない — 判断が必要なものもある。内訳:</p>
+
+    <div class="save-box">
+      <table style="margin-bottom: 0;">
+        <tr><th style="width:30%">リクエストタイプ</th><th style="width:15%">全体に占める割合</th><th style="width:15%">自動化可能?</th><th>備考</th></tr>
+        <tr><td>シンプルFAQ / ナレッジ検索</td><td>~44%</td><td style="color:#2e7d32;font-weight:700;">✅ はい</td><td>0–5分処理時間。IAGPTが即座に回答、スタッフがレビュー。</td></tr>
+        <tr><td>中程度の複雑さ</td><td>~22%</td><td style="color:#2e7d32;font-weight:700;">✅ 部分的</td><td>5–10分処理時間。IAGPTがナレッジで支援、スタッフが文脈を追加。</td></tr>
+        <tr><td>複雑な質問</td><td>~26%</td><td style="color:#c62828;font-weight:700;">❌ いいえ</td><td>10–30分処理時間。人間の調査と判断が必要。</td></tr>
+        <tr><td>非常に複雑 / 機密性が高い</td><td>~8%</td><td style="color:#c62828;font-weight:700;">❌ いいえ</td><td>30分以上の処理時間。経験豊富なスタッフが対応すべき。</td></tr>
+        <tr style="font-weight: 800; background: #c8e6c9;"><td>自動化可能合計</td><td>~50%</td><td></td><td>シンプル + 一部の中程度リクエストは自動化またはAI支援可能</td></tr>
+      </table>
+    </div>
+    <p style="font-size: 11px; color: #616161; margin-top: 8px;"><strong>注:</strong> フェーズ2はスタッフのみ — IAGPTはスタッフを支援するが、顧客に自動応答しない。顧客向けAI自動化にはフェーズ4の承認が必要（目標: 2027年2月）。~50%の自動化見積もりはフェーズ4本番稼働後に適用。</p>
 
     <h3>P&Lシミュレーション: 損益分岐はいつ？</h3>
     <p>スタッフ時間節約は2026年7月（フェーズ2本番稼働時）に<strong>直ちに</strong>開始。Zendesk節約は<strong>2027年2月</strong>の準備決定後に開始。以下は年次予測:</p>
@@ -294,12 +355,12 @@
       </tr>
       <tr class="save-row">
         <td>スタッフ時間節約</td>
-        <td class="pnl-positive">+¥415万</td>
-        <td class="pnl-positive">+¥415万</td>
-        <td class="pnl-positive">+¥415万</td>
-        <td class="pnl-positive">+¥415万</td>
-        <td class="pnl-positive">+¥415万</td>
-        <td class="pnl-positive">+¥415万</td>
+        <td class="pnl-positive">+¥550万</td>
+        <td class="pnl-positive">+¥550万</td>
+        <td class="pnl-positive">+¥550万</td>
+        <td class="pnl-positive">+¥550万</td>
+        <td class="pnl-positive">+¥550万</td>
+        <td class="pnl-positive">+¥550万</td>
       </tr>
       <tr class="save-row">
         <td>Zendesk節約（2027年2月以降）</td>
@@ -312,34 +373,34 @@
       </tr>
       <tr class="profit-row">
         <td>半期利益/(損失)</td>
-        <td class="pnl-positive">+¥241万</td>
-        <td class="pnl-positive">+¥415万</td>
-        <td class="pnl-positive">+¥615〜655万</td>
-        <td class="pnl-positive">+¥615〜655万</td>
-        <td class="pnl-positive">+¥615〜655万</td>
-        <td class="pnl-positive">+¥615〜655万</td>
+        <td class="pnl-positive">+¥376万</td>
+        <td class="pnl-positive">+¥550万</td>
+        <td class="pnl-positive">+¥750〜790万</td>
+        <td class="pnl-positive">+¥750〜790万</td>
+        <td class="pnl-positive">+¥750〜790万</td>
+        <td class="pnl-positive">+¥750〜790万</td>
       </tr>
       <tr class="cumulative-row">
         <td>累計</td>
-        <td class="pnl-positive">+¥241万</td>
-        <td class="pnl-positive">+¥656万</td>
-        <td class="pnl-positive">+¥1,271〜1,311万</td>
-        <td class="pnl-positive">+¥1,886〜1,966万</td>
-        <td class="pnl-positive">+¥2,501〜2,621万</td>
-        <td class="pnl-positive">+¥3,116〜3,276万</td>
+        <td class="pnl-positive">+¥376万</td>
+        <td class="pnl-positive">+¥926万</td>
+        <td class="pnl-positive">+¥1,676〜1,716万</td>
+        <td class="pnl-positive">+¥2,426〜2,506万</td>
+        <td class="pnl-positive">+¥3,176〜3,296万</td>
+        <td class="pnl-positive">+¥3,926〜4,086万</td>
       </tr>
     </table>
 
     <div class="result-box" style="margin-top: 12px;">
       <p style="margin-bottom: 4px;"><strong>📈 損益分岐: 最初の6ヶ月以内。</strong></p>
       <p style="margin-bottom: 0; font-size: 11px;">
-        ¥174万の投資は2026年9月頃（2026年7月本番稼働から2ヶ月）にスタッフ時間節約のみで回収。それ以降、節約された毎円は純粋な継続ベネフィット。Zendesk解約節約（~¥400〜480万/年）は2027年2月決定から追加。
+        ¥174万の投資は2026年9月頃（2026年7月本番稼働から2ヶ月）にスタッフ時間節約のみで回収（実際のZendeskデータに基づき¥1,100万/年）。それ以降、節約された毎円は純粋な継続ベネフィット。Zendesk解約節約（~¥400〜480万/年）は2027年2月決定から追加。
       </p>
     </div>
 
     <div class="warning-box">
       <strong>タイミングに関する注意:</strong><br>
-      • スタッフ時間節約（~¥830万/年）は2026年7月にフェーズ2が本番稼働した時点で開始 — スタッフが3システム検索の代わりにIAGPTを使用開始。<br>
+      • スタッフ時間節約（~¥1,100万/年、実際のZendeskダッシュボードデータ）は2026年7月にフェーズ2が本番稼働した時点で開始 — スタッフが3システム検索の代わりにIAGPTを使用開始。<br>
       • Zendeskサブスクリプション節約（~¥400〜480万/年）はフェーズ4本番稼働後、2027年2月の準備決定通過後に開始。<br>
       • Zendeskコスト推定（~¥400〜480万/年）はSuite Team価格（$55/エージェント/月、4エージェント、¥150/USD）に基づく。実際の契約金額は調達で確認が必要。
     </div>
@@ -349,7 +410,7 @@
       <tr><th style="width:30%">項目</th><th>決定事項</th></tr>
       <tr><td><strong>フェーズ2承認</strong></td><td>フェーズ2A取り込み + フェーズ2B置き換え準備作業を承認</td></tr>
       <tr><td><strong>投資</strong></td><td>~¥174万一時（87h開発時間）。新規インフラなし。</td></tr>
-      <tr><td><strong>期待リターン</strong></td><td>~¥830万/年スタッフ節約（2026年7月〜）+ ~¥400〜480万/年Zendesk節約（2027年2月〜）</td></tr>
+      <tr><td><strong>期待リターン</strong></td><td>~¥1,100万/年スタッフ節約（2026年7月〜）+ ~¥400〜480万/年Zendesk節約（2027年2月〜）</td></tr>
       <tr><td><strong>回収期間</strong></td><td>約2ヶ月</td></tr>
       <tr><td><strong>境界</strong></td><td>即時Zendesk解約なし。フェーズ2では顧客向けAIなし。</td></tr>
     </table>
