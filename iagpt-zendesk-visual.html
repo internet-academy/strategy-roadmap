@@ -116,7 +116,7 @@
   <div class="section-label">1 — CURRENT SITUATION: Problems with Zendesk</div>
   <div class="section-content">
     <h2>What's happening today</h2>
-    <p>Zendesk currently holds <strong>58 approved support knowledge articles</strong> and operational workflows. Our 3–4 support staff must search <strong>3 separate systems</strong> (Zendesk, Confluence, internal docs) to find answers — wasting an estimated <strong>2 hours per person per week</strong>.</p>
+    <p>Zendesk currently holds <strong>58 approved support knowledge articles</strong> and operational workflows. Our 3–4 support staff must search <strong>3 separate systems</strong> (Zendesk, Confluence, internal docs) to find answers — wasting an estimated <strong>~3 hours per person per week</strong>.</p>
 
     <div class="diagram-row">
       <div class="diagram-col">
@@ -127,9 +127,9 @@
           <div class="diagram-box current">Internal<br>docs</div>
         </div>
         <div class="diagram-arrow">↓ ↓ ↓</div>
-        <div class="diagram-box current" style="min-width: 200px;">Staff search 3 systems<br>~2h/week wasted per person</div>
+        <div class="diagram-box current" style="min-width: 200px;">Staff search 3 systems<br>~3h/week wasted per person</div>
         <div class="diagram-arrow">↓</div>
-        <div class="diagram-box shared" style="min-width: 120px;">~¥4–4.8M/yr<br>Zendesk cost</div>
+        <div class="diagram-box shared" style="min-width: 120px;">~¥4–4.8M/yr<br>Zendesk cost<br><span style="font-size:10px;">(pending confirmation with 佳子さん)</span></div>
       </div>
     </div>
 
@@ -140,12 +140,12 @@
         <p>IA does not control the knowledge platform. If Zendesk raises prices or changes features, we have no leverage.</p>
       </div>
       <div class="problem-card">
-        <h4>2. Recurring cost (~¥4–4.8M/year)</h4>
+        <h4>2. Recurring cost (~¥4–4.8M/year, pending confirmation with 佳子さん)</h4>
         <p>Suite Team, 4 agents at $55/agent/month. This cost continues every year regardless of how much we actually use Zendesk.</p>
       </div>
       <div class="problem-card">
         <h4>3. Knowledge fragmentation</h4>
-        <p>Support knowledge is split across 3 systems. Staff waste ~2h/week searching — that's <strong>~¥11.0M/year</strong> in lost staff time (4 staff × 2.6h × 52 weeks × ¥20K/h, based on real Zendesk data).</p>
+        <p>Support knowledge is split across 3 systems. Staff waste ~3h/week searching — that's <strong>~¥11.0M/year</strong> in lost staff time (4 staff × ~2.6h × 52 weeks × ¥20K/h, based on real Zendesk data). Breakdown: ~3h/week per staff = ~54h/month across 4 staff = ~¥11.0M/year in lost staff time.</p>
       </div>
       <div class="problem-card">
         <h4>4. No AI integration path</h4>
@@ -169,9 +169,9 @@
         <div class="diagram-arrow">↓</div>
         <div class="diagram-box ai" style="min-width: 200px;">AI-assisted answers<br>(staff-only, human-reviewed)</div>
         <div class="diagram-arrow">↓</div>
-        <div class="diagram-box target" style="min-width: 160px;">Staff save ~2.6h/week<br>~¥11.0M/year reclaimed</div>
+        <div class="diagram-box target" style="min-width: 160px;">Staff save ~3h/week<br>~¥11.0M/year reclaimed</div>
         <div class="diagram-arrow">↓ (after Phase 4 + Feb 2027 decision)</div>
-        <div class="diagram-box target" style="min-width: 160px;">Zendesk cancelled<br>~¥4–4.8M/year saved</div>
+        <div class="diagram-box target" style="min-width: 160px;">Zendesk cancelled<br>~¥4–4.8M/year saved<br><span style="font-size:10px;">(pending confirmation with 佳子さん)</span></div>
       </div>
     </div>
 
@@ -183,11 +183,11 @@
       </div>
       <div class="solution-card">
         <h4>Recurring cost → Eliminated (after Phase 4)</h4>
-        <p>Once Zendesk is cancelled (target: Feb 2027), ~¥4–4.8M/year stops flowing out. Phase 2 builds the foundation for this decision.</p>
+        <p>Once Zendesk is cancelled (target: Feb 2027), ~¥4–4.8M/year (pending confirmation with 佳子さん) stops flowing out. Phase 2 builds the foundation for this decision.</p>
       </div>
       <div class="solution-card">
         <h4>Fragmentation → One unified search</h4>
-        <p>Staff search IAGPT only — Zendesk + Confluence knowledge in one place. ~2.6h/week per person reclaimed immediately (from July 2026).</p>
+        <p>Staff search IAGPT only — Zendesk + Confluence knowledge in one place. 3h/week saved (1.9h search + 1.2h automatable) per person reclaimed immediately (from July 2026).</p>
       </div>
       <div class="solution-card">
         <h4>No AI path → AI-assisted answers</h4>
@@ -223,7 +223,7 @@
       <tr><td>Jun 2026</td><td>Phase 2 BRD + TS creation</td><td>Approve scope for ingestion and readiness work</td></tr>
       <tr><td>Jul 2026</td><td>Phase 2 live release</td><td>Staff begin using IAGPT → time savings start</td></tr>
       <tr><td>Sep 2026</td><td>Phase 3 BRD (digital text)</td><td>Depends on Phase 2 knowledge approach</td></tr>
-      <tr><td>Oct 2026</td><td>Phase 3 development + live release</td><td>Digital text becomes next knowledge source</td></tr>
+      <tr><td>Oct 2026</td><td>Phase 3 development + test server release</td><td>Digital text on test server</td></tr>
       <tr><td>Nov 2026</td><td>Phase 4 BRD (customer AI)</td><td>Define customer-facing scope and controls</td></tr>
       <tr><td>Dec 2026</td><td>Phase 4 development + test server release</td><td>Customer-facing release remains test-only</td></tr>
       <tr><td>Jan 2027</td><td>Phase 4 user testing</td><td>Validate quality, controls, and workflow</td></tr>
@@ -241,14 +241,16 @@
   <div class="section-label">3 — COST-BENEFIT: Investment, Savings, and Break-even</div>
   <div class="section-content">
     <h2>Financial summary</h2>
-    <p>The Phase 2 investment pays for itself in approximately <strong>2 months</strong> of staff time savings alone — even before Zendesk is cancelled.</p>
+    <p>The full 3-phase investment (~¥10.74M) is recovered by ~March 2027 through phased savings — Phase 2 search savings start immediately, then Phase 4 automation + Zendesk cancellation savings accelerate payback.</p>
 
     <div class="spend-box">
       <h4>🔴 What we spend (one-time)</h4>
       <table style="margin-bottom: 0;">
-        <tr><th style="width:35%">Cost</th><th style="width:15%">Amount</th><th>What it covers</th></tr>
-        <tr><td>Ingestion effort (dev time)</td><td><strong>~¥1.74M</strong></td><td>87 hours × ¥20,000/h — reviewing, approving, ingesting, and testing 58 Zendesk articles into IAGPT</td></tr>
-        <tr style="font-weight: 800; background: #ffcdd2;"><td>Total one-time cost</td><td>~¥1.74M</td><td>No new infrastructure — uses existing IAGPT and AI hardware</td></tr>
+        <tr><th style="width:30%">Phase</th><th style="width:20%">Hours</th><th style="width:15%">Cost</th><th>What it covers</th></tr>
+        <tr><td><strong>Phase 2</strong> — Zendesk ingestion</td><td>87h</td><td>~¥1.74M</td><td>Reviewing, approving, ingesting, and testing 58 Zendesk articles into IAGPT</td></tr>
+        <tr><td><strong>Phase 3</strong> — Digital text ingestion</td><td>200h</td><td>~¥4.0M</td><td>Ingesting digital text materials into IAGPT knowledge base</td></tr>
+        <tr><td><strong>Phase 4</strong> — Customer-facing chatbot</td><td>250h</td><td>~¥5.0M</td><td>Building customer-facing AI chatbot with controls and escalation</td></tr>
+        <tr style="font-weight: 800; background: #ffcdd2;"><td>Total development cost</td><td>537h</td><td>~¥10.74M</td><td>All 3 phases needed for full savings. No new infrastructure — uses existing IAGPT and AI hardware.</td></tr>
       </table>
     </div>
 
@@ -256,19 +258,21 @@
       <h4>🟢 What we save every year (recurring)</h4>
       <table style="margin-bottom: 0;">
         <tr><th style="width:35%">Saving</th><th style="width:15%">Amount/year</th><th>How it works</th></tr>
-        <tr><td>Staff time saved</td><td><strong>~¥11.0M</strong></td><td>Based on real Zendesk data: 1,000 req/month × 6.4 min avg handle time → 550h/year saved → ¥11.0M/year (see calculation below)</td></tr>
-        <tr><td>Zendesk subscription (if cancelled)</td><td><strong>~¥4–4.8M</strong></td><td>Suite Team, 4 agents at $55/agent/month. Cancelled after Phase 4 + Feb 2027 decision</td></tr>
-        <tr style="font-weight: 800; background: #c8e6c9;"><td>Total recurring savings</td><td>~¥15.4–15.8M/year</td><td>Every year, for as long as IAGPT replaces Zendesk</td></tr>
+        <tr><td>Staff search time saved <strong>(from Jul 2026 — Phase 2)</strong></td><td><strong>~¥8.0M</strong></td><td>2 min × 1,000 req/month = 33h/month saved. Staff search 1 system instead of 3.</td></tr>
+        <tr><td>Staff automation time saved <strong>(from Feb 2027 — Phase 4)</strong></td><td><strong>~¥3.0M</strong></td><td>500 automatable reqs × 2.5 min saved each. Staff review AI answers instead of handling fully.</td></tr>
+        <tr><td>Zendesk subscription (if cancelled) <strong>(from Feb 2027)</strong></td><td><strong>~¥4–4.8M</strong><br><span style="font-size:10px;color:#f9a825;">(pending confirmation with 佳子さん)</span></td><td>Suite Team, 4 agents at $55/agent/month. Cancelled after Phase 4 + Feb 2027 decision</td></tr>
+        <tr style="font-weight: 800; background: #c8e6c9;"><td>Total recurring savings (full run rate)</td><td>~¥15.0–15.8M/year</td><td>From Feb 2027 when all phases are live</td></tr>
       </table>
     </div>
 
     <div class="result-box">
       <h4>🔵 Net result</h4>
       <table style="margin-bottom: 0;">
-        <tr><th style="width:35%">Summary</th><th style="width:15%">Amount</th><th>What it means</th></tr>
-        <tr><td>One-time investment</td><td><strong>~¥1.74M</strong></td><td>We spend this once to ingest Zendesk knowledge into IAGPT</td></tr>
-        <tr><td>Annual savings</td><td><strong>~¥15.4–15.8M/year</strong></td><td>We save this every year from staff time + Zendesk cancellation</td></tr>
-        <tr style="font-weight: 800; background: #c8e6c9;"><td>Payback period</td><td><strong>~2 months</strong></td><td>The ¥1.74M investment is recovered in ~2 months of staff time savings alone (¥11.0M/year)</td></tr>
+        <tr><th style="width:35%">Summary</th><th style="width:20%">Amount</th><th>What it means</th></tr>
+        <tr><td>One-time investment (3 phases)</td><td><strong>~¥10.74M</strong></td><td>Phase 2 (¥1.74M, Jul 2026) + Phase 3 (¥4.0M, Oct 2026) + Phase 4 (¥5.0M, Dec 2026)</td></tr>
+        <tr><td>Annual savings (Phase 2 only, from Jul 2026)</td><td><strong>~¥8.0M/year</strong></td><td>Search time savings — staff use 1 system instead of 3</td></tr>
+        <tr><td>Annual savings (full, from Feb 2027)</td><td><strong>~¥15.0–15.8M/year</strong></td><td>Search + automation + Zendesk cancellation</td></tr>
+        <tr style="font-weight: 800; background: #c8e6c9;"><td>Payback period</td><td><strong>~14 months</strong></td><td>From Jul 2026. ¥10.74M recovered by ~Mar 2027 (8 months of Phase 2 savings + 6 months of full savings)</td></tr>
       </table>
     </div>
 
@@ -332,7 +336,7 @@
     <p style="font-size: 11px; color: #616161; margin-top: 8px;"><strong>Note:</strong> Phase 2 is staff-only — IAGPT assists staff but does not auto-respond to customers. Customer-facing AI automation requires Phase 4 approval (target: Feb 2027). The ~50% automation estimate applies once Phase 4 is live.</p>
 
     <h3>P&L simulation: when does break-even happen?</h3>
-    <p>Staff time savings start <strong>immediately</strong> (July 2026, when Phase 2 goes live). Zendesk savings start after the <strong>February 2027</strong> readiness decision. Here's the year-by-year projection:</p>
+    <p>Phase 2 search savings start <strong>immediately</strong> (July 2026, ~¥8.0M/year). Phase 4 automation savings (~¥3.0M/year) and Zendesk cancellation savings (~¥4–4.8M/year) start after the <strong>February 2027</strong> readiness decision. Development costs are spread across 3 phases (Jul–Dec 2026). Here's the half-year projection:</p>
 
     <table class="pnl-table">
       <tr>
@@ -345,73 +349,54 @@
         <th>Jan–Jun 2029</th>
       </tr>
       <tr class="spend-row">
-        <td>One-time cost (ingestion)</td>
-        <td class="pnl-negative">-¥1.74M</td>
-        <td>¥0</td>
-        <td>¥0</td>
-        <td>¥0</td>
-        <td>¥0</td>
-        <td>¥0</td>
+        <td>Development costs (3 phases)</td>
+        <td class="pnl-negative">-¥10.74M</td><td>¥0</td><td>¥0</td><td>¥0</td><td>¥0</td><td>¥0</td>
       </tr>
       <tr class="save-row">
-        <td>Staff time savings</td>
-        <td class="pnl-positive">+¥5.5M</td>
-        <td class="pnl-positive">+¥5.5M</td>
-        <td class="pnl-positive">+¥5.5M</td>
-        <td class="pnl-positive">+¥5.5M</td>
-        <td class="pnl-positive">+¥5.5M</td>
-        <td class="pnl-positive">+¥5.5M</td>
+        <td>Phase 2 search savings</td>
+        <td class="pnl-positive">+¥4.0M</td><td class="pnl-positive">+¥4.0M</td><td class="pnl-positive">+¥4.0M</td><td class="pnl-positive">+¥4.0M</td><td class="pnl-positive">+¥4.0M</td><td class="pnl-positive">+¥4.0M</td>
+      </tr>
+      <tr class="save-row">
+        <td>Phase 4 automation savings</td>
+        <td>¥0</td><td class="pnl-positive">+¥1.5M</td><td class="pnl-positive">+¥1.5M</td><td class="pnl-positive">+¥1.5M</td><td class="pnl-positive">+¥1.5M</td><td class="pnl-positive">+¥1.5M</td>
       </tr>
       <tr class="save-row">
         <td>Zendesk savings (after Feb 2027)</td>
-        <td>¥0</td>
-        <td>¥0</td>
-        <td class="pnl-positive">+¥2.0–2.4M</td>
-        <td class="pnl-positive">+¥2.0–2.4M</td>
-        <td class="pnl-positive">+¥2.0–2.4M</td>
-        <td class="pnl-positive">+¥2.0–2.4M</td>
+        <td>¥0</td><td class="pnl-positive">+¥2.0–2.4M</td><td class="pnl-positive">+¥2.0–2.4M</td><td class="pnl-positive">+¥2.0–2.4M</td><td class="pnl-positive">+¥2.0–2.4M</td><td class="pnl-positive">+¥2.0–2.4M</td>
       </tr>
       <tr class="profit-row">
         <td>Half-year profit/(loss)</td>
-        <td class="pnl-positive">+¥3.76M</td>
-        <td class="pnl-positive">+¥5.5M</td>
-        <td class="pnl-positive">+¥7.5–7.9M</td>
-        <td class="pnl-positive">+¥7.5–7.9M</td>
-        <td class="pnl-positive">+¥7.5–7.9M</td>
-        <td class="pnl-positive">+¥7.5–7.9M</td>
+        <td class="pnl-negative">-¥6.74M</td><td class="pnl-positive">+¥7.5–7.9M</td><td class="pnl-positive">+¥7.5–7.9M</td><td class="pnl-positive">+¥7.5–7.9M</td><td class="pnl-positive">+¥7.5–7.9M</td><td class="pnl-positive">+¥7.5–7.9M</td>
       </tr>
       <tr class="cumulative-row">
         <td>Cumulative</td>
-        <td class="pnl-positive">+¥3.76M</td>
-        <td class="pnl-positive">+¥9.26M</td>
-        <td class="pnl-positive">+¥16.76–17.16M</td>
-        <td class="pnl-positive">+¥24.26–25.06M</td>
-        <td class="pnl-positive">+¥31.76–32.96M</td>
-        <td class="pnl-positive">+¥39.26–40.86M</td>
+        <td class="pnl-negative">-¥6.74M</td><td class="pnl-positive">+¥0.76–1.16M</td><td class="pnl-positive">+¥8.26–9.06M</td><td class="pnl-positive">+¥15.76–16.96M</td><td class="pnl-positive">+¥23.26–24.86M</td><td class="pnl-positive">+¥30.76–32.76M</td>
       </tr>
     </table>
 
     <div class="result-box" style="margin-top: 12px;">
-      <p style="margin-bottom: 4px;"><strong>📈 Break-even: within the first 6 months.</strong></p>
+      <p style="margin-bottom: 4px;"><strong>📈 Break-even: ~January 2027 (H1 2027).</strong></p>
       <p style="margin-bottom: 0; font-size: 11px;">
-        The ¥1.74M investment is recovered by ~September 2026 (2 months after July 2026 live release) from staff time savings alone (¥11.0M/year based on real Zendesk data). From that point forward, every yen saved is pure recurring benefit. Zendesk cancellation savings (~¥4–4.8M/year) add to this starting from the Feb 2027 decision.
+        The ¥10.74M investment (3 phases, Jul–Dec 2026) is partially offset by Phase 2 search savings (¥4.0M in H2 2026). Cumulative turns positive in H1 2027 (~¥0.76–1.16M) when Phase 4 automation savings and Zendesk cancellation savings begin. From that point forward, ~¥7.5–7.9M/half-year in recurring savings.
       </p>
     </div>
 
     <div class="warning-box">
       <strong>Timing notes:</strong><br>
-      • Staff time savings (~¥11.0M/year, based on real Zendesk dashboard data) start July 2026 when Phase 2 goes live — staff begin using IAGPT instead of searching 3 systems.<br>
-      • Zendesk subscription savings (~¥4–4.8M/year) only start after Phase 4 is live and the February 2027 readiness decision passes.<br>
-      • Zendesk cost estimate (~¥4–4.8M/year) is based on Suite Team pricing ($55/agent/month, 4 agents, ¥150/USD). Actual contract amount needs confirmation with procurement.
+      • Staff search savings (~¥8.0M/year) start July 2026 when Phase 2 goes live — staff search 1 system instead of 3.<br>
+      • Phase 4 automation savings (~¥3.0M/year) start February 2027 when customer-facing AI is live.<br>
+      • Zendesk subscription savings (~¥4–4.8M/year, pending confirmation with 佳子さん) start after Phase 4 + Feb 2027 readiness decision.<br>
+      • Total development cost: ¥10.74M across 3 phases (Phase 2: ¥1.74M, Phase 3: ¥4.0M, Phase 4: ¥5.0M).<br>
+      • Zendesk cost estimate (~¥4–4.8M/year) is based on Suite Team pricing ($55/agent/month, 4 agents, ¥150/USD). Actual contract amount pending confirmation with 佳子さん.
     </div>
 
     <h3>Approval requested</h3>
     <table>
       <tr><th style="width:30%">Item</th><th>Decision</th></tr>
       <tr><td><strong>Phase 2 approval</strong></td><td>Approve Phase 2A ingestion + Phase 2B replacement readiness work</td></tr>
-      <tr><td><strong>Investment</strong></td><td>~¥1.74M one-time (87h dev time). No new infrastructure.</td></tr>
-      <tr><td><strong>Expected return</strong></td><td>~¥11.0M/year staff savings (from Jul 2026) + ~¥4–4.8M/year Zendesk savings (from Feb 2027)</td></tr>
-      <tr><td><strong>Payback</strong></td><td>~2 months</td></tr>
+      <tr><td><strong>Investment</strong></td><td>~¥10.74M one-time (537h across 3 phases: Phase 2 ¥1.74M, Phase 3 ¥4.0M, Phase 4 ¥5.0M). No new infrastructure.</td></tr>
+      <tr><td><strong>Expected return</strong></td><td>~¥8.0M/year search savings (from Jul 2026) + ~¥3.0M/year automation savings (from Feb 2027) + ~¥4–4.8M/year Zendesk savings (from Feb 2027, pending confirmation with 佳子さん)</td></tr>
+      <tr><td><strong>Payback</strong></td><td>~14 months from Jul 2026 (~Mar 2027)</td></tr>
       <tr><td><strong>Boundary</strong></td><td>No immediate Zendesk cancellation. No customer-facing AI in Phase 2.</td></tr>
     </table>
   </div>
